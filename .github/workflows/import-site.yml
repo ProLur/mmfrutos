@@ -1,0 +1,47 @@
+name: Importar web actual
+
+on:
+  push:
+    paths:
+      - ".github/workflows/import-site.yml"
+
+permissions:
+  contents: write
+
+jobs:
+  importar:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Copiar la web actual
+        shell: bash
+        run: |
+          set -euo pipefail
+          pages=(
+            index.html proyectos.html entretenimiento.html maximilian23.html
+            agente.html contacto.html icaro.html maquis.html bajo.html
+            bynox.html libro.html almendralejo.html style.css main.js
+          )
+          images=(
+            banner.jpg bynox2.jpg fondo-notas.jpg icaro.jpg lab23.jpg
+            libro.jpg logo.png meteo.png peli.jpg radio.jpg tools.jpg xal.png yo.png
+          )
+          for file in "${pages[@]}"; do
+            curl --fail --location --silent --show-error               "https://mmfrutos.com/$file" --output "$file"
+          done
+          mkdir -p img
+          for file in "${images[@]}"; do
+            curl --fail --location --silent --show-error               "https://mmfrutos.com/img/$file" --output "img/$file"
+          done
+          printf 'mmfrutos.com\n' > CNAME
+          : > .nojekyll
+
+      - name: Guardar la copia
+        shell: bash
+        run: |
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git add .
+          git commit -m "Importa la web actual de mmfrutos.com"
+          git push
