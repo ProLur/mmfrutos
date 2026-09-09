@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bajo</title>
+    <style>
+        body { margin: 0; background: #111; color: #e6edf3; font-family: Arial, sans-serif; }
+        .bajo-main {
+            max-width: 900px;
+            margin: auto;
+            padding: 10px;
+            color: inherit;
+            font-family: inherit;
+        }
+        .bajo-contenido {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 14px;
+            align-items: flex-start;
+        }
+        .bajo-video {
+            flex: 0 1 220px;
+            min-width: 190px;
+        }
+        .bajo-texto {
+            flex: 1 1 350px;
+            min-width: 280px;
+            text-align: justify;
+            font-size: 0.94rem;
+            line-height: 1.45;
+        }
+        .youtube-embed {
+            max-width: 220px;
+            border-radius: 6px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.12);
+            background: #000;
+        }
+        .youtube-embed iframe {
+            width: 100%;
+            display: block;
+            aspect-ratio: 16 / 9;
+            border: 0;
+        }
+        .bajo-ficha {
+            background: rgba(255, 255, 255, 0.05);
+            padding: 8px;
+            margin-top: 8px;
+            font-size: 0.82rem;
+            border-radius: 6px;
+        }
+        .bajo-ficha p {
+            margin: 4px 0;
+        }
+        .streaming-links {
+            margin-top: 10px;
+            font-size: 0.82rem;
+        }
+        .streaming-links a {
+            color: #1db954;
+            text-decoration: none;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        .streaming-links a:hover {
+            text-decoration: underline;
+        }
+        .streaming-links a.youtube {
+            color: #ff0000;
+        }
+        .bajo-texto p { margin: 0 0 8px; }
+    </style>
+</head>
+<body>
+<main class="bajo-main">
+    <div class="bajo-contenido">
+        <div class="bajo-video">
+            <div class="youtube-embed" data-youtube-id="fb-RpB6cYxU" data-youtube-title="I Walk Alone - Manuel M. Frutos"></div>
+            <div class="bajo-ficha">
+                <p><strong>Año:</strong> 2025</p>
+                <p><strong>Autor:</strong> Manuel M. Frutos</p>
+                <div class="streaming-links">
+                    Puedes oírme en los servicios de streaming más populares como
+                    <a href="https://open.spotify.com/intl-es/artist/7AMOypbTUWxE1WzP7IGW7a" target="_blank">Spotify</a> o
+                    <a href="https://www.youtube.com/channel/UCV43KG-_QMT-TkGuWnjA6WQ" class="youtube" target="_blank">YouTube Music</a>.
+                </div>
+            </div>
+        </div>
+
+        <div class="bajo-texto">
+            <p>
+                Estoy comenzando un nuevo proyecto musical en el que quiero dar vida a varios temas
+                utilizando las últimas tecnologías disponibles en producción y creación sonora.
+            </p>
+            <p>
+                Mi objetivo es explorar y experimentar con diferentes estilos e idiomas, dejando que cada canción
+                encuentre su propia identidad. 
+            </p>
+            <p>
+                El primer tema de este viaje es <em>I Walk Alone</em>, un homenaje al grupo formado por mi padre y mis tíos, 
+                llamado <strong>Los Riscos</strong>, cuya música me ha acompañado desde siempre.
+            </p>
+            <p>
+                Además, esta obra es un tributo personal a mi fascinación por el tema <em>Caminar Caminar</em>, 
+                que sirve de inspiración y punto de partida para este proyecto, uniendo memoria, emoción y nuevas formas de creación.
+            </p>
+        </div>
+    </div>
+</main>
+<script src="main.js"></script>
+<script>
+    window.addEventListener('load', () => {
+        if (window.parent && window.parent !== window) {
+            window.parent.postMessage({ type: 'resize-project-modal' }, '*');
+        }
+    });
+</script>
+</body>
+</html>

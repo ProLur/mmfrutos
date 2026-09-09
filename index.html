@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Portfolio de Manuel M. Frutos: música, tecnología, educación y experiencias interactivas.">
+  <title>Inicio - Manuel M. Frutos</title>
+  <link rel="stylesheet" href="style.css?v=20260525">
+</head>
+<body>
+
+  <nav>
+    <div class="logo"><a href="index.html"><img src="img/logo.png" alt="Manuel M. Frutos"></a></div>
+    <button class="menu-toggle" id="menuBtn" aria-label="Abrir menu">&#9776;</button>
+    <ul id="menu" role="navigation">
+      <li><a href="index.html" class="active">Inicio</a></li>
+      <li><a href="proyectos.html">Proyectos musicales</a></li>
+      <li><a href="entretenimiento.html">Entretenimiento</a></li>
+      <li><a href="maximilian23.html">Maximilian 23</a></li>
+      <li><a href="agente.html">Agente IA</a></li>
+      <li><a href="contacto.html">Contacto</a></li>
+    </ul>
+  </nav>
+
+  <header class="hero">
+    <div class="hero-panel">
+      <div class="hero-copy">
+        <span class="eyebrow">Manuel M. Frutos</span>
+        <h1 class="home-title">Música, tecnología y experiencias educativas</h1>
+        <p class="lead">
+          Un portfolio para reunir proyectos sonoros, herramientas digitales y mundos interactivos con una identidad clara.
+        </p>
+        <div class="hero-actions">
+          <a class="btn primary" href="proyectos.html">Explorar obra</a>
+          <button class="btn secondary" id="openBio" type="button">¿Quién soy?</button>
+        </div>
+      </div>
+      <div class="media-frame portrait-frame">
+        <img src="img/yo.png" alt="Manuel M. Frutos">
+      </div>
+    </div>
+  </header>
+
+  <main class="page-main stack home-main">
+    <section class="home-intro">
+      <p>
+        Este espacio reúne una trayectoria hecha de música, tecnología, escritura y educación: discos, proyectos sonoros, herramientas para el aula, experiencias interactivas y pequeñas piezas nacidas de la curiosidad.
+      </p>
+    </section>
+  </main>
+
+  <footer>
+    &copy; <span id="year"></span> Manuel M. Frutos - Todos los derechos reservados
+  </footer>
+
+  <div class="modal-overlay" id="bioModal" style="display:none">
+    <div class="modal-content">
+      <button class="close-btn" id="closeBio" aria-label="Cerrar">&times;</button>
+      <div class="detail-modal-body">
+        <div class="tag-row">
+          <span class="tag">Perfil profesional</span>
+          <span class="tag">Música</span>
+          <span class="tag">Tecnología</span>
+        </div>
+        <h2>¿Quién soy?</h2>
+        <p>
+          Desde que creé en BASIC, en un Spectrum, aquel parque con un patinete hecho a base de líneas y círculos, objetos dibujados uno a uno y colores elegidos con paciencia, no he parado de construir cosas. Después llegaron las animaciones con los primeros programas en MS-DOS y la música hecha de la forma más rudimentaria con FastTracker 2, buscando sonidos donde apenas había herramientas y convirtiendo la curiosidad en oficio. Con el tiempo, aquel impulso inicial ha evolucionado hasta trabajar hoy con Studio One y librerías de instrumentos como Native Instruments.
+        </p>
+        <p>
+          A comienzos de los 2000 hice muchas otras cosas que, lamentablemente, he perdido con el tiempo: montajes de audio que llegaron a emitirse en <em>A cielo abierto</em> (COPE) y <em>Si amanece nos vamos</em> (SER), además de pequeñas animaciones realizadas fotograma a fotograma. Eran trabajos casi artesanales, hechos con paciencia, intuición y muchas ganas de aprender.
+        </p>
+        <p>
+          Hacia 2003 o 2004 trabajé en el mapa de <a class="inline-link" href="https://www.youtube.com/watch?v=mdoqcqvGsyw" target="_blank" rel="noopener">Almendralejo y Sierra de los Santos</a> para el mod <a class="inline-link" href="https://es.wikipedia.org/wiki/1936,_Espa%C3%B1a_en_llamas" target="_blank" rel="noopener"><em>1936, España en llamas</em></a>, un proyecto que me permitió unir videojuegos, historia local y creación digital. En aquel trabajo colaboraron conmigo Primitivo Rojas y Fernando Sierra poniendo la voz.
+        </p>
+        <p>
+          También colaboré en Wikipedia cuando el proyecto estaba empezando, aportando contenido desde mi usuario <a class="inline-link" href="https://es.wikipedia.org/wiki/Usuario:Manuel.Frutos" target="_blank" rel="noopener">Manuel.Frutos</a>.
+        </p>
+        <p>
+          La música me ha acompañado desde niño. Fui a por ella por iniciativa propia y, de forma autodidacta, aprendí a tocar distintos instrumentos como guitarra, batería o saxofón. En ese camino se sitúa <a class="inline-link" id="openIcaroFromBio" href="icaro.html"><em>Ícaro Caído</em></a>, un disco grabado en el verano de 2008 y autopublicado en colaboración con el productor Alejandro de Pinedo: nueve temas compuestos siendo muy joven, nacidos desde la guitarra y después abiertos a una armonización pop más variada.
+        </p>
+        <p>
+          Mis inquietudes también me llevaron a programar software: desde pequeños programas personales hasta aplicaciones móviles. Siempre he entendido la tecnología como una forma de abrir puertas, una manera de construir ideas, resolver problemas y dar cuerpo a lo que antes solo estaba en la imaginación.
+        </p>
+        <p>
+          Me gusta escribir, imaginar historias y llevarlas al aula. En 2021 publiqué <a class="inline-link" href="https://www.amazon.es/Nuestra-Historia-Una-historia-visigodos-ebook/dp/B09HNX7N7H" target="_blank" rel="noopener"><em>Nuestra Historia: Una historia de visigodos</em></a>, un trabajo realizado con los niños en clase y una experiencia en la que la escritura se convirtió en memoria compartida y aprendizaje.
+        </p>
+        <p>
+          Aunque he dado algunos conciertos y nunca he dejado la música de lado, durante el curso 2025/2026 me he volcado especialmente en <a class="inline-link" href="https://maximilian23.com/" target="_blank" rel="noopener">Maximilian 23</a>, un agente de IA para el centro que reúne multitud de herramientas: desde el propio asistente hasta pizarras, radar de sonido, sección de plástica y reproductor de audiciones.
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <div class="modal-overlay" id="projectModal" style="display:none">
+    <div class="modal-content modal-content-wide">
+      <button class="close-btn" id="closeProject" aria-label="Cerrar">&times;</button>
+      <div id="projectContainer">Cargando...</div>
+    </div>
+  </div>
+
+  <script src="main.js"></script>
+  <script>
+    const bioModal = document.getElementById('bioModal');
+    const openBio = document.getElementById('openBio');
+    const closeBio = document.getElementById('closeBio');
+    const openIcaroFromBio = document.getElementById('openIcaroFromBio');
+    const projectModal = createIframeModal({
+      modal: document.getElementById('projectModal'),
+      container: document.getElementById('projectContainer'),
+      closeButton: document.getElementById('closeProject')
+    });
+
+    function closeBioModal() {
+      bioModal.style.display = 'none';
+    }
+
+    function openProjectModal(file) {
+      closeBioModal();
+      projectModal.open(file);
+    }
+
+    openBio.addEventListener('click', () => { bioModal.style.display = 'flex'; });
+    closeBio.addEventListener('click', closeBioModal);
+    bioModal.addEventListener('click', e => { if (e.target === bioModal) closeBioModal(); });
+    openIcaroFromBio.addEventListener('click', e => { e.preventDefault(); openProjectModal('icaro.html'); });
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') {
+        closeBioModal();
+        projectModal.close();
+      }
+    });
+  </script>
+</body>
+</html>

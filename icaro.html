@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ícaro Caído</title>
+  <style>
+    :root {
+      color-scheme: dark;
+      --bg: #111;
+      --panel: rgba(255, 255, 255, 0.06);
+      --line: rgba(255, 255, 255, 0.14);
+      --text: #e6edf3;
+      --muted: #a9b8c5;
+      --accent: #54d6c6;
+      --accent-soft: rgba(84, 214, 198, 0.12);
+    }
+
+    * { box-sizing: border-box; }
+
+    body {
+      margin: 0;
+      background: var(--bg);
+      color: var(--text);
+      font-family: Arial, sans-serif;
+    }
+
+    .proyecto-main {
+      max-width: 1080px;
+      margin: auto;
+      padding: 6px;
+      color: inherit;
+      font-family: inherit;
+    }
+
+    .proyecto-contenido {
+      display: grid;
+      grid-template-columns: minmax(120px, 150px) minmax(320px, 1fr) minmax(250px, 300px);
+      gap: 14px;
+      align-items: start;
+    }
+
+    .proyecto-imagen img {
+      width: 100%;
+      height: auto;
+      border-radius: 10px;
+      box-shadow: 0 0 25px rgba(0, 230, 230, 0.20);
+    }
+
+    .proyecto-texto {
+      min-width: 0;
+      text-align: justify;
+      line-height: 1.38;
+      font-size: 0.92rem;
+    }
+
+    .proyecto-texto h1 {
+      margin: 0 0 8px;
+      font-size: clamp(1.35rem, 3vw, 1.65rem);
+      line-height: 1.1;
+    }
+
+    .proyecto-texto p { margin: 0 0 8px; }
+
+    .proyecto-ficha,
+    .audio-player {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+    }
+
+    .proyecto-ficha {
+      padding: 7px;
+      margin-top: 7px;
+      font-size: 0.82rem;
+    }
+
+    .proyecto-ficha p { margin: 3px 0; }
+
+    .spotify-link {
+      display: inline-block;
+      margin-top: 10px;
+      color: #1db954;
+      font-weight: bold;
+      text-decoration: none;
+    }
+
+    .spotify-link:hover { text-decoration: underline; }
+
+    .video-grid {
+      display: grid;
+      grid-template-columns: repeat(2, minmax(0, 1fr));
+      gap: 8px;
+      margin-top: 10px;
+      max-width: 520px;
+    }
+
+    .video-card p {
+      margin: 0 0 4px;
+      color: var(--muted);
+      font-size: 0.78rem;
+      font-weight: bold;
+    }
+
+    .youtube-embed {
+      overflow: hidden;
+      border-radius: 8px;
+      border: 1px solid var(--line);
+      background: #000;
+    }
+
+    .youtube-embed iframe {
+      width: 100%;
+      display: block;
+      aspect-ratio: 16 / 9;
+      border: 0;
+    }
+
+    .youtube-fallback {
+      position: relative;
+      display: block;
+      width: 100%;
+      aspect-ratio: 16 / 9;
+      overflow: hidden;
+      color: #fff;
+      text-decoration: none;
+      background: #000;
+    }
+
+    .youtube-fallback img {
+      width: 100%;
+      height: 100%;
+      display: block;
+      object-fit: cover;
+      filter: brightness(0.72);
+    }
+
+    .youtube-play {
+      position: absolute;
+      inset: 50% auto auto 50%;
+      width: 44px;
+      height: 44px;
+      transform: translate(-50%, -50%);
+      border-radius: 999px;
+      background: rgba(255, 0, 0, 0.88);
+    }
+
+    .youtube-play::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      left: 52%;
+      transform: translate(-50%, -50%);
+      border-style: solid;
+      border-width: 8px 0 8px 14px;
+      border-color: transparent transparent transparent #fff;
+    }
+
+    .youtube-fallback-text {
+      position: absolute;
+      left: 8px;
+      right: 8px;
+      bottom: 7px;
+      font-size: 0.74rem;
+      font-weight: bold;
+      text-align: center;
+    }
+
+    .audio-player {
+      margin-top: 0;
+      padding: 9px;
+      position: sticky;
+      top: 8px;
+    }
+
+    .audio-player h2 {
+      margin: 0 0 8px;
+      font-size: 1rem;
+      line-height: 1.2;
+    }
+
+    .audio-now {
+      margin: 0 0 8px;
+      color: var(--muted);
+      font-size: 0.84rem;
+    }
+
+    audio {
+      display: block;
+      width: 100%;
+      height: 36px;
+      margin-bottom: 8px;
+    }
+
+    .track-list {
+      display: grid;
+      gap: 4px;
+      max-height: 205px;
+      overflow-y: auto;
+      padding-right: 2px;
+    }
+
+    .track-button {
+      width: 100%;
+      border: 1px solid transparent;
+      border-radius: 5px;
+      padding: 6px 8px;
+      background: rgba(255, 255, 255, 0.05);
+      color: var(--text);
+      font: inherit;
+      font-size: 0.86rem;
+      text-align: left;
+      cursor: pointer;
+    }
+
+    .track-button:hover,
+    .track-button.active {
+      border-color: rgba(84, 214, 198, 0.45);
+      background: var(--accent-soft);
+      color: #ffffff;
+    }
+
+    .audio-note {
+      margin: 7px 0 0;
+      color: var(--muted);
+      font-size: 0.78rem;
+    }
+
+    @media (max-width: 860px) {
+      .proyecto-contenido {
+        grid-template-columns: minmax(120px, 150px) minmax(0, 1fr);
+      }
+
+      .audio-player {
+        grid-column: 1 / -1;
+        position: static;
+      }
+    }
+
+    @media (max-width: 620px) {
+      .proyecto-contenido {
+        grid-template-columns: 1fr;
+      }
+
+      .proyecto-imagen {
+        display: grid;
+        grid-template-columns: 92px minmax(0, 1fr);
+        gap: 10px;
+        align-items: start;
+      }
+
+      .proyecto-ficha {
+        margin-top: 0;
+      }
+
+      .video-grid {
+        grid-template-columns: 1fr;
+      }
+    }
+  </style>
+</head>
+<body>
+<main class="proyecto-main">
+  <div class="proyecto-contenido">
+    <div class="proyecto-imagen">
+      <img src="img/icaro.jpg" alt="Carátula de Ícaro Caído">
+      <div class="proyecto-ficha">
+        <p><strong>Obra:</strong> Ícaro Caído</p>
+        <p><strong>Tipo:</strong> Disco</p>
+        <p><strong>Grabación:</strong> Verano de 2008</p>
+        <p><strong>Autor:</strong> Manuel M. Frutos</p>
+        <p><strong>Producción:</strong> Alejandro de Pinedo</p>
+      </div>
+    </div>
+
+    <div class="proyecto-texto">
+      <h1>Ícaro Caído</h1>
+      <p>
+        <strong>Ícaro Caído</strong> fue grabado en el verano de 2008 y autopublicado en colaboración con el productor <strong>Alejandro de Pinedo</strong>.
+      </p>
+      <p>
+        El disco reúne nueve temas que compuse siendo muy joven, nacidos inicialmente desde la guitarra, desde esa forma directa y casi íntima de buscar una canción antes de que exista del todo.
+      </p>
+      <p>
+        En la grabación, esas canciones crecieron hacia una armonización pop más variada, con arreglos y colores que ampliaron su primera raíz acústica. Es una obra temprana, pero también un punto importante en mi manera de entender la composición: partir de algo sencillo y dejar que encuentre su propio paisaje.
+      </p>
+
+      <a class="spotify-link" href="https://open.spotify.com/intl-es/album/0Be0rsZxytPOyJCWVUqxWV?si=7ugwXXMLTdSvSjfcpL_Png" target="_blank" rel="noopener">Escuchar el disco también en Spotify</a>
+
+      <div class="video-grid">
+        <div class="video-card">
+          <p>Ni mirarte</p>
+          <div class="youtube-embed" data-youtube-id="STLiND6it1E" data-youtube-title="Ni mirarte - Ícaro Caído"></div>
+        </div>
+        <div class="video-card">
+          <p>Entrevista</p>
+          <div class="youtube-embed" data-youtube-id="i00pXYh7f54" data-youtube-title="Entrevista sobre Ícaro Caído"></div>
+        </div>
+      </div>
+    </div>
+
+    <section class="audio-player" aria-labelledby="icaro-player-title">
+      <h2 id="icaro-player-title">Canciones de Ícaro Caído</h2>
+      <p class="audio-now" id="audioNow">Selecciona una canción para escucharla.</p>
+      <audio id="icaroAudio" controls preload="metadata"></audio>
+      <div class="track-list" id="trackList"></div>
+      <p class="audio-note" id="audioNote">Los audios se cargarán desde la carpeta mp3.</p>
+    </section>
+  </div>
+</main>
+
+<script src="main.js"></script>
+<script>
+  const fallbackTracks = [
+    { file: '01 Ni mirarte.mp3', title: 'Ni mirarte' },
+    { file: '02 Perpetua.mp3', title: 'Perpetua' },
+    { file: '03 Volando.mp3', title: 'Volando' },
+    { file: '04 La quiero.mp3', title: 'La quiero' },
+    { file: '05 No vuelvas más.mp3', title: 'No vuelvas más' },
+    { file: '06 Misterio.mp3', title: 'Misterio' },
+    { file: '07 Mi cancerbero.mp3', title: 'Mi cancerbero' },
+    { file: '08 No puedo más.mp3', title: 'No puedo más' },
+    { file: '09 El alma.mp3', title: 'El alma' }
+  ];
+
+  const audio = document.getElementById('icaroAudio');
+  const trackList = document.getElementById('trackList');
+  const audioNow = document.getElementById('audioNow');
+  const audioNote = document.getElementById('audioNote');
+  let activeButton = null;
+  let activeTrack = null;
+  let currentTrackIndex = -1;
+  let loadedTracks = [];
+  let usingAltPath = false;
+
+  function parseTrackLine(line) {
+    const cleanLine = line.trim();
+    if (!cleanLine || cleanLine.startsWith('#')) return null;
+
+    const parts = cleanLine.split(/\s+-\s+/);
+    if (parts.length < 2) return null;
+
+    const left = parts.shift().trim();
+    const right = parts.join(' - ').trim();
+    const leftIsAudio = /\.mp3$/i.test(left);
+    const rightIsAudio = /\.mp3$/i.test(right);
+
+    if (leftIsAudio) return { file: left, title: right || left };
+    if (rightIsAudio) return { file: right, title: left || right };
+    return null;
+  }
+
+  async function loadTrackList() {
+    const sources = ['mp3/lista.txt', 'lista/lista.txt'];
+
+    for (const source of sources) {
+      try {
+        const response = await fetch(source, { cache: 'no-store' });
+        if (!response.ok) continue;
+
+        const text = await response.text();
+        const tracks = text.split(/\r?\n/).map(parseTrackLine).filter(Boolean);
+        if (tracks.length) return tracks;
+      } catch (error) {
+        // Si se abre la ficha como archivo local, algunos navegadores bloquean fetch.
+      }
+    }
+
+    return fallbackTracks;
+  }
+
+  function setTrack(index, shouldPlay = true) {
+    const track = loadedTracks[index];
+    if (!track) return;
+
+    activeTrack = track;
+    currentTrackIndex = index;
+    usingAltPath = false;
+    if (activeButton) activeButton.classList.remove('active');
+    activeButton = trackList.querySelector(`[data-track-index="${index}"]`);
+    if (activeButton) activeButton.classList.add('active');
+    audioNow.textContent = track.title;
+    audioNote.textContent = 'Preparado desde mp3/' + track.file;
+    audio.src = 'mp3/' + track.file;
+    if (shouldPlay) {
+      audioNote.textContent = 'Reproduciendo desde mp3/' + track.file;
+      audio.play().catch(() => {});
+    }
+  }
+
+  function renderTracks(tracks) {
+    loadedTracks = tracks;
+    trackList.innerHTML = '';
+
+    tracks.forEach((track, index) => {
+      const button = document.createElement('button');
+      button.type = 'button';
+      button.className = 'track-button';
+      button.dataset.trackIndex = String(index);
+      button.textContent = `${index + 1}. ${track.title}`;
+      button.addEventListener('click', () => setTrack(index));
+      trackList.appendChild(button);
+    });
+
+    if (tracks.length) {
+      setTrack(0, false);
+    }
+
+    if (window.parent && window.parent !== window) {
+      window.parent.postMessage({ type: 'resize-project-modal' }, '*');
+    }
+  }
+
+  audio.addEventListener('play', () => {
+    if (currentTrackIndex === -1 && loadedTracks.length) {
+      setTrack(0);
+    }
+  });
+
+  audio.addEventListener('ended', () => {
+    const nextIndex = currentTrackIndex + 1;
+    if (nextIndex < loadedTracks.length) {
+      setTrack(nextIndex);
+      return;
+    }
+
+    audioNow.textContent = 'Disco terminado.';
+    audioNote.textContent = 'Has escuchado Ícaro Caído completo.';
+    currentTrackIndex = -1;
+    activeTrack = null;
+    if (activeButton) activeButton.classList.remove('active');
+    activeButton = null;
+  });
+
+  audio.addEventListener('error', () => {
+    if (!activeTrack || usingAltPath) return;
+    usingAltPath = true;
+    audioNote.textContent = 'No se encontró en mp3; probando en lista/' + activeTrack.file;
+    audio.src = 'lista/' + activeTrack.file;
+    audio.play().catch(() => {});
+  });
+
+  loadTrackList().then(renderTracks);
+</script>
+</body>
+</html>

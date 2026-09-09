@@ -1,0 +1,657 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Xal'Zaroth — agente de inteligencia artificial creado por Manuel M. Frutos.">
+  <title>Xal'Zaroth — Agente IA</title>
+  <link rel="stylesheet" href="style.css?v=20260525">
+  <style>
+    body {
+      background:
+        linear-gradient(180deg, rgba(7, 9, 13, 0.68), rgba(7, 9, 13, 0.96)),
+        linear-gradient(135deg, rgba(0, 255, 204, 0.12), rgba(255, 91, 110, 0.08) 48%, rgba(7, 9, 13, 0.2)),
+        #0d1117;
+    }
+
+    .agente-container {
+      max-width: 1040px;
+      margin: 0 auto;
+      padding: 0;
+      display: grid;
+      grid-template-columns: 118px minmax(0, 520px);
+      align-items: start;
+      gap: 12px;
+    }
+
+    .agente-grafico {
+      display: block;
+      text-align: center;
+    }
+
+    .agente-grafico img {
+      width: 118px;
+      border-radius: 12px;
+      border: 1px solid rgba(0, 255, 204, 0.28);
+      box-shadow: 0 22px 50px rgba(0, 0, 0, 0.38), 0 0 34px rgba(0, 255, 204, 0.16);
+    }
+
+    .agente-texto {
+      display: grid;
+      gap: 10px;
+      max-width: 520px;
+      padding: 14px;
+      font-size: 0.95rem;
+      line-height: 1.45;
+      color: #dffbf7;
+      text-align: left;
+      background: rgba(12, 18, 24, 0.72);
+      border: 1px solid rgba(255, 255, 255, 0.12);
+      border-radius: 8px;
+      box-shadow: 0 10px 24px rgba(0, 0, 0, 0.16);
+    }
+
+    .agente-texto h1 {
+      margin: 0;
+      font-size: clamp(1.45rem, 3vw, 2rem);
+    }
+
+    .agente-texto p { margin: 0; }
+
+    .agente-texto strong { color: #00ffcc; }
+
+    .btn-invocar {
+      display: inline-block;
+      width: fit-content;
+      margin-top: 0;
+      background: #00ffcc;
+      color: #000;
+      font-weight: bold;
+      padding: 9px 14px;
+      border-radius: 6px;
+      text-decoration: none;
+      box-shadow: 0 12px 26px rgba(0, 255, 204, 0.16);
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    .btn-invocar:hover {
+      background: #67ffe4;
+      transform: translateY(-1px);
+    }
+
+    .btn-limpiar {
+      width: fit-content;
+      margin-top: 0;
+      background: rgba(255, 91, 110, 0.14);
+      color: #fff;
+      font-weight: bold;
+      padding: 8px 12px;
+      border: 1px solid rgba(255, 91, 110, 0.5);
+      border-radius: 6px;
+      cursor: pointer;
+      transition: background 0.3s, transform 0.2s;
+    }
+
+    .btn-limpiar:hover {
+      background: #ff445c;
+      transform: translateY(-1px);
+    }
+
+    /* Chat modal */
+    .modal-overlay.chat-overlay {
+      background: rgba(0,0,0,0.9);
+    }
+
+    .modal-content.chat-content {
+      background: #000;
+      border: 3px solid #00ffcc;
+      width: 90%;
+      max-width: 800px;
+      height: 85vh;
+      max-height: 85vh;
+      display: flex;
+      flex-direction: column;
+      box-shadow: 0 0 20px #00ffcc;
+      padding: 0;
+    }
+
+    .modal-header {
+      padding: 12px 16px;
+      background: #07100c;
+      color: #00ffcc;
+      font-weight: 700;
+      flex-shrink: 0;
+    }
+
+    .modal-body {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      padding: 0;
+      background: #000;
+      min-height: 0;
+    }
+
+    .xal-frame {
+      width: 100%;
+      height: 100%;
+      border: 0;
+      display: block;
+      background: #0d1117;
+    }
+
+    .chat-area {
+      flex: 1;
+      overflow-y: auto;
+      border: 2px solid #00ffcc;
+      border-radius: 6px;
+      padding: 15px;
+      background: #010a0a;
+      margin-bottom: 10px;
+      color: #00ffcc;
+      font-family: "Courier New", monospace;
+      min-height: 0;
+    }
+
+    .chat-footer {
+      flex-shrink: 0;
+      display: flex;
+      gap: 10px;
+      background: #000;
+      border-top: 2px solid #00ffcc;
+      padding: 10px;
+    }
+
+    .chat-input {
+      flex: 1;
+      padding: 10px;
+      border: 2px solid #00ffcc;
+      border-radius: 6px;
+      background: #000;
+      color: #7CFC00;
+      font-family: "Courier New", monospace;
+      font-size: 1rem;
+    }
+
+    .chat-input:focus { outline: none; }
+
+    .send-btn {
+      background: #00ffcc;
+      color: #000;
+      border: none;
+      padding: 10px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      font-weight: 700;
+      transition: background 0.2s;
+    }
+
+    .send-btn:hover    { background: #00e6e6; }
+    .send-btn:disabled { opacity: 0.5; cursor: not-allowed; }
+
+    .close-btn.chat-close {
+      position: absolute;
+      top: 10px; right: 14px;
+      color: #00ffcc;
+    }
+
+    .msg-user { font-size: 1.05rem; margin: 6px 0; color: #7CFC00; }
+    .msg-bot  { font-size: 1.05rem; margin: 6px 0; color: #00ffcc; }
+    .msg-bot.real { margin-top: 14px; }
+
+    .typing-dots span {
+      display: inline-block;
+      width: 6px; height: 6px;
+      margin: 0 2px;
+      background: #00ffcc;
+      border-radius: 50%;
+      animation: blink 1s infinite;
+    }
+    .typing-dots span:nth-child(2) { animation-delay: 0.2s; }
+    .typing-dots span:nth-child(3) { animation-delay: 0.4s; }
+
+    @keyframes blink {
+      0%, 80%, 100% { opacity: 0.2; }
+      40%            { opacity: 1; }
+    }
+
+    .cursor {
+      display: inline-block;
+      animation: blinkCursor 1s steps(1) infinite;
+    }
+
+    @keyframes blinkCursor {
+      0%, 50%      { opacity: 1; }
+      50.01%, 100% { opacity: 0; }
+    }
+
+    @media (max-width: 600px) {
+      .agente-container {
+        grid-template-columns: 86px minmax(0, 1fr);
+        margin: 0;
+        padding: 0;
+      }
+      .agente-grafico img { width: 86px; }
+    }
+  </style>
+</head>
+<body>
+
+  <nav>
+    <div class="logo"><a href="index.html"><img src="img/logo.png" alt="Manuel M. Frutos"></a></div>
+    <button class="menu-toggle" id="menuBtn" aria-label="Abrir menú">&#9776;</button>
+    <ul id="menu" role="navigation">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="proyectos.html">Proyectos musicales</a></li>
+      <li><a href="entretenimiento.html">Entretenimiento</a></li>
+      <li><a href="maximilian23.html">Maximilian 23</a></li>
+      <li><a href="agente.html" class="active">Agente IA</a></li>
+      <li><a href="contacto.html">Contacto</a></li>
+    </ul>
+  </nav>
+
+  <main class="page-main stack">
+  <section class="agente-container">
+    <div class="agente-grafico">
+      <img src="https://mmfrutos.com/img/xal.png" alt="Xal'Zaroth">
+    </div>
+    <div class="agente-texto">
+      <span class="eyebrow">Agente IA narrativo</span>
+      <h1 class="page-title">Xal'Zaroth</h1>
+      <p><strong>Xal'Zaroth</strong> es un ser extraterrestre hostil, culto y despiadado que observa a la humanidad desde su nave.</p>
+      <p>Pulsa el botón e <strong>invoca</strong> su presencia.</p>
+      <a href="#" id="abrirAgente" class="btn-invocar">Invoca a Xal'Zaroth</a>
+      <p style="font-size:0.9rem;color:#9ae6d9;margin-top:14px;">
+        ℹ️ Los recuerdos y la conversación se almacenan <strong>localmente</strong> en tu navegador.
+      </p>
+      <button id="limpiarChat" class="btn-limpiar">Limpiar memoria</button>
+    </div>
+  </section>
+
+  </main>
+
+  <div class="modal-overlay chat-overlay" id="modalAgente" style="display:none">
+    <div class="modal-content chat-content">
+      <div class="modal-header">👁 Xal'Zaroth</div>
+      <button class="close-btn chat-close" id="cerrarAgente" aria-label="Cerrar">&times;</button>
+      <div class="modal-body">
+        <div id="chat" class="chat-area"></div>
+        <div class="chat-footer">
+          <input id="message" class="chat-input" placeholder="Escribe tu mensaje…">
+          <button class="send-btn" id="sendBtn">Enviar</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    &copy; <span id="year"></span> Manuel M. Frutos — Todos los derechos reservados
+  </footer>
+
+  <script src="main.js"></script>
+  <script>
+    const CHAT_URL = "https://xalzaroth.onrender.com/chat";
+
+    const modal    = document.getElementById("modalAgente");
+    const abrir    = document.getElementById("abrirAgente");
+    const cerrar   = document.getElementById("cerrarAgente");
+    const input    = document.getElementById("message");
+    const sendBtn  = document.getElementById("sendBtn");
+
+    abrir.addEventListener("click", e => {
+      e.preventDefault();
+      modal.style.display = "flex";
+
+      const chat = document.getElementById("chat");
+      chat.innerHTML = "";
+      setInputState(true, "Estableciendo contacto…");
+
+      const saved  = localStorage.getItem("xalzaroth_chat");
+      const memory = loadMemory();
+
+      if (!saved) {
+        startPings();
+        initSequence(chat, memory).then(stopPings);
+      } else {
+        loadConversation();
+
+        appendBot(chat, "🔁 Reconectando con Xal'Zaroth…");
+
+        setTimeout(() => {
+          const nombre = memory.nombre
+            ? `He vuelto a encontrarte, ${memory.nombre}. Continúa.`
+            : "Conexión restablecida. Continúa, humano.";
+          appendBot(chat, nombre);
+          saveConversation();
+          setInputState(false, "Escribe tu mensaje…");
+        }, 1500);
+      }
+    });
+
+    cerrar.addEventListener("click", () => { modal.style.display = "none"; stopPings(); });
+    modal.addEventListener("click", e => { if (e.target === modal) { modal.style.display = "none"; stopPings(); } });
+    document.addEventListener("keydown", e => { if (e.key === "Escape" && modal.style.display === "flex") { modal.style.display = "none"; stopPings(); } });
+
+    input.addEventListener("keydown", e => { if (e.key === "Enter") sendMessage(); });
+    sendBtn.addEventListener("click", sendMessage);
+
+    function setInputState(disabled, placeholder) {
+      input.readOnly    = disabled;
+      sendBtn.disabled  = disabled;
+      input.placeholder = placeholder;
+    }
+
+    function scrollToBottom() {
+      const chat = document.getElementById("chat");
+      chat.scrollTop = chat.scrollHeight;
+    }
+
+    function appendBot(chat, text, cls) {
+      const node = document.createElement("div");
+      node.className = "msg-bot" + (cls ? " " + cls : "");
+      node.textContent = text;
+      chat.appendChild(node);
+      scrollToBottom();
+      return node;
+    }
+
+    function typeWriter(container, text, speed = 30) {
+      return new Promise(res => {
+        let i = 0;
+        function step() {
+          if (i < text.length) {
+            container.innerHTML = text.substring(0, i + 1) + "<span class='cursor'>_</span>";
+            scrollToBottom();
+            i++;
+            setTimeout(step, speed);
+          } else {
+            container.innerHTML = text + "<br>";
+            saveConversation();
+            scrollToBottom();
+            res();
+          }
+        }
+        step();
+      });
+    }
+
+    async function initSequence(chat, memory) {
+      const lines = [
+        "INICIALIZANDO SISTEMA XAL-ZAROTH v1.0",
+        "Cargando protocolos de comunicacion",
+        "Analizando debilidades humanas",
+        "Estableciendo enlace"
+      ];
+
+      for (const l of lines) {
+        const node = document.createElement("div");
+        node.className = "msg-bot";
+        chat.appendChild(node);
+        await typeWriter(node, l, 25);
+        await new Promise(r => setTimeout(r, Math.random() * 1000 + 800));
+        safePing();
+      }
+
+      const first = document.createElement("div");
+      first.className = "msg-bot real";
+      chat.appendChild(first);
+
+      const saludo = memory.nombre
+        ? `☠️ Xal'Zaroth listo. Te recuerdo, ${memory.nombre}. Habla, humano.`
+        : "☠️ Xal'Zaroth listo. Habla, insignificante humano.";
+
+      await typeWriter(first, saludo, 25);
+      setInputState(false, "Escribe tu mensaje…");
+      activateInput();
+    }
+
+    function activateInput() {
+      const isMobile = /Android|iPhone|iPad|iPod/i.test(navigator.userAgent);
+      if (isMobile) {
+        input.readOnly = true;
+        input.focus({ preventScroll: true });
+        setTimeout(() => { input.readOnly = false; }, 100);
+      } else {
+        input.focus();
+      }
+    }
+
+    async function sendMessage() {
+      const text = input.value.trim();
+      if (!text) return;
+
+      setInputState(true, "");
+      input.value = "";
+      input.blur();
+
+      const chat = document.getElementById("chat");
+      const u = document.createElement("div");
+      u.className = "msg-user";
+      u.textContent = "> " + text;
+      chat.appendChild(u);
+      scrollToBottom();
+
+      const nameMatch = text.match(/(?:me llamo|soy)\s+([a-záéíóúñA-ZÁÉÍÓÚÑ]+)/i);
+      if (nameMatch) {
+        const nombre = nameMatch[1];
+        saveMemory("nombre", nombre.charAt(0).toUpperCase() + nombre.slice(1).toLowerCase());
+      }
+
+      const memoryText = buildMemoryString();
+      let typingNode = null;
+
+      try {
+        const res = await fetch(CHAT_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message: text, memory: memoryText })
+        });
+
+        const data  = await res.json();
+        let reply   = (data.reply || "...").replace(/^"(.*)"$/, "$1");
+
+        typingNode = showTypingIndicator();
+        await new Promise(r => setTimeout(r, Math.random() * 1500 + 800));
+        removeTypingIndicator(typingNode);
+
+        const b = document.createElement("div");
+        b.className = "msg-bot";
+        chat.appendChild(b);
+        await typeWriter(b, reply, 25);
+
+      } catch(e) {
+        if (typingNode) removeTypingIndicator(typingNode);
+        const b = document.createElement("div");
+        b.className = "msg-bot";
+        chat.appendChild(b);
+        await typeWriter(b, "⚠️ Error en el vacío cósmico. Inténtalo de nuevo.", 25);
+      }
+
+      setInputState(false, "Escribe tu mensaje…");
+      activateInput();
+    }
+
+    function showTypingIndicator() {
+      const chat = document.getElementById("chat");
+      const node = document.createElement("div");
+      node.className = "msg-bot";
+      node.innerHTML = '<span class="typing-dots"><span></span><span></span><span></span></span>';
+      chat.appendChild(node);
+      scrollToBottom();
+      return node;
+    }
+
+    function removeTypingIndicator(node) { if (node) node.remove(); }
+
+    function saveConversation() {
+      const chat = document.getElementById("chat");
+      const msgs = [];
+      chat.querySelectorAll(".msg-user, .msg-bot").forEach(m => {
+        msgs.push({ role: m.classList.contains("msg-user") ? "user" : "bot", text: m.textContent });
+      });
+      localStorage.setItem("xalzaroth_chat", JSON.stringify(msgs));
+    }
+
+    function loadConversation() {
+      const saved = localStorage.getItem("xalzaroth_chat");
+      if (!saved) return;
+      const chat = document.getElementById("chat");
+      chat.innerHTML = "";
+      JSON.parse(saved).forEach(m => {
+        const node = document.createElement("div");
+        node.className = m.role === "user" ? "msg-user" : "msg-bot";
+        node.textContent = m.text;
+        chat.appendChild(node);
+      });
+      scrollToBottom();
+    }
+
+    function saveMemory(key, value) {
+      const mem = loadMemory();
+      mem[key] = value;
+      localStorage.setItem("xalzaroth_memory", JSON.stringify(mem));
+    }
+
+    function loadMemory() {
+      return JSON.parse(localStorage.getItem("xalzaroth_memory") || "{}");
+    }
+
+    function buildMemoryString() {
+      return Object.entries(loadMemory()).map(([k, v]) => `${k}: ${v}`).join(", ");
+    }
+
+    function startPings() {}
+
+    function stopPings() {}
+
+    function setInputState(disabled, placeholder) {
+      input.disabled = disabled;
+      sendBtn.disabled = disabled;
+      input.placeholder = placeholder;
+    }
+
+    function activateInput() {
+      input.focus();
+    }
+
+    function linkify(text) {
+      if (!text) return "";
+      if (text.includes("<a ")) return text;
+      const urlRegex = /\b((?:https?:\/\/|www\.)[^\s<>"']+)/gi;
+      return text.replace(urlRegex, match => {
+        let clean = match.trim().replace(/[.,!?;:]+$/, "");
+        if (!/^https?:\/\//i.test(clean)) clean = "https://" + clean;
+        return `<a href="${clean}" target="_blank" rel="noopener noreferrer">${clean}</a>`;
+      });
+    }
+
+    async function initSequence(chat, memory) {
+      const lines = [
+        "INICIALIZANDO SISTEMA XAL-ZAROTH v1.0",
+        "Cargando protocolos de comunicacion",
+        "Analizando debilidades humanas",
+        "Estableciendo enlace"
+      ];
+
+      for (const line of lines) {
+        const node = document.createElement("div");
+        node.className = "msg-bot";
+        chat.appendChild(node);
+        await typeWriter(node, line, 25);
+        await new Promise(resolve => setTimeout(resolve, 450));
+      }
+
+      const saludo = memory.nombre
+        ? `Xal'Zaroth listo. Te recuerdo, ${memory.nombre}. Habla, humano.`
+        : "Xal'Zaroth listo. Habla, insignificante humano.";
+
+      const first = document.createElement("div");
+      first.className = "msg-bot real";
+      chat.appendChild(first);
+      await typeWriter(first, saludo, 18);
+      setInputState(false, "Escribe tu mensaje...");
+      activateInput();
+    }
+
+    async function sendMessage() {
+      const text = input.value.trim();
+      if (!text) return;
+
+      setInputState(true, "");
+      input.value = "";
+
+      const chat = document.getElementById("chat");
+      const u = document.createElement("div");
+      u.className = "msg-user";
+      u.textContent = "> " + text;
+      chat.appendChild(u);
+      scrollToBottom();
+
+      const nameMatch = text.match(/(?:me llamo|soy)\s+([a-záéíóúñA-ZÁÉÍÓÚÑ]+)/i);
+      if (nameMatch) {
+        const nombre = nameMatch[1];
+        saveMemory("nombre", nombre.charAt(0).toUpperCase() + nombre.slice(1).toLowerCase());
+      }
+
+      let typingNode = showTypingIndicator();
+
+      try {
+        const res = await fetch(CHAT_URL, {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ message: text, memory: buildMemoryString() })
+        });
+
+        const raw = await res.text();
+        if (!res.ok) throw new Error("HTTP " + res.status + ": " + raw.slice(0, 80));
+
+        let data;
+        try {
+          data = JSON.parse(raw);
+        } catch(e) {
+          throw new Error("Respuesta no JSON: " + raw.slice(0, 80));
+        }
+        const reply = String(data.reply || data.respuesta || data.message || "...").replace(/^"(.*)"$/, "$1");
+
+        removeTypingIndicator(typingNode);
+        typingNode = null;
+
+        const b = document.createElement("div");
+        b.className = "msg-bot";
+        chat.appendChild(b);
+        await typeWriter(b, reply, 25);
+      } catch(e) {
+        if (typingNode) removeTypingIndicator(typingNode);
+        const b = document.createElement("div");
+        b.className = "msg-bot";
+        b.textContent = "Error de conexión con Xal'Zaroth: " + e.message;
+        chat.appendChild(b);
+        saveConversation();
+        scrollToBottom();
+      }
+
+      setInputState(false, "Escribe tu mensaje...");
+      activateInput();
+    }
+
+    function saveConversation() {
+      const chat = document.getElementById("chat");
+      const msgs = [];
+      chat.querySelectorAll(".msg-user, .msg-bot").forEach(m => {
+        if (m.querySelector(".typing-dots")) return;
+        msgs.push({ role: m.classList.contains("msg-user") ? "user" : "bot", text: m.textContent });
+      });
+      localStorage.setItem("xalzaroth_chat", JSON.stringify(msgs));
+    }
+
+    document.getElementById("limpiarChat").addEventListener("click", () => {
+      if (confirm("¿Borrar toda la memoria y conversación con Xal'Zaroth?")) {
+        localStorage.removeItem("xalzaroth_chat");
+        localStorage.removeItem("xalzaroth_memory");
+        document.getElementById("chat").innerHTML = "";
+      }
+    });
+  </script>
+
+</body>
+</html>

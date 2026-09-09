@@ -1,0 +1,230 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Maximilian 23: asistente educativo, laboratorio musical, audiciones, radar de sonido, plástica y meteoescuela.">
+  <title>Maximilian 23 - Manuel M. Frutos</title>
+  <link rel="stylesheet" href="style.css?v=20260525">
+</head>
+<body>
+
+  <nav>
+    <div class="logo"><a href="index.html"><img src="img/logo.png" alt="Manuel M. Frutos"></a></div>
+    <button class="menu-toggle" id="menuBtn" aria-label="Abrir menu">&#9776;</button>
+    <ul id="menu" role="navigation">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="proyectos.html">Proyectos musicales</a></li>
+      <li><a href="entretenimiento.html">Entretenimiento</a></li>
+      <li><a href="maximilian23.html" class="active">Maximilian 23</a></li>
+      <li><a href="agente.html">Agente IA</a></li>
+      <li><a href="contacto.html">Contacto</a></li>
+    </ul>
+  </nav>
+
+  <main class="page-main stack">
+    <section>
+      <div class="section-head">
+        <div>
+          <span class="eyebrow">Herramientas</span>
+        </div>
+      </div>
+      <p class="section-intro">
+        Maximilian 23 reúne herramientas digitales para el aula: asistente IA, laboratorio musical, audiciones, radar de sonido, plástica y meteoescuela.
+      </p>
+      <div class="compact-grid">
+        <article class="compact-card">
+          <div class="compact-card-image">
+            <img src="https://maximilian23.com/Cabeza.png" alt="Asistente Maximilian 23">
+          </div>
+          <div class="tag-row">
+            <span class="tag">Asistente</span>
+            <span class="tag">IA educativa</span>
+          </div>
+          <h3>Asistente Maximilian 23</h3>
+          <p>Entrada principal del proyecto.</p>
+          <button class="btn primary detail-open" type="button" data-detail="asistente">Detalles</button>
+        </article>
+
+        <article class="compact-card">
+          <div class="compact-card-image">
+            <img src="img/lab23.jpg" alt="Laboratorio Musical">
+          </div>
+          <div class="tag-row">
+            <span class="tag">Música</span>
+            <span class="tag">Práctica</span>
+          </div>
+          <h3>Laboratorio Musical</h3>
+          <p>Lectura, ritmo, escucha y creatividad.</p>
+          <button class="btn primary detail-open" type="button" data-detail="lab">Detalles</button>
+        </article>
+
+        <article class="compact-card">
+          <div class="compact-card-image">
+            <img src="img/radio.jpg" alt="Radio Maximilian 23">
+          </div>
+          <div class="tag-row">
+            <span class="tag">Audiciones</span>
+            <span class="tag">Música</span>
+          </div>
+          <h3>Radio Maximilian 23</h3>
+          <p>Reproductor de audiciones trabajadas en clase.</p>
+          <button class="btn primary detail-open" type="button" data-detail="radio">Detalles</button>
+        </article>
+
+        <article class="compact-card">
+          <div class="compact-card-image">
+            <img src="https://maximilian23.com/arte/comoelperroyelgato.jpg" alt="Plástica">
+          </div>
+          <div class="tag-row">
+            <span class="tag">Plástica</span>
+            <span class="tag">Creatividad</span>
+          </div>
+          <h3>Plástica</h3>
+          <p>Recursos visuales y propuestas artísticas.</p>
+          <button class="btn primary detail-open" type="button" data-detail="plastica">Detalles</button>
+        </article>
+
+        <article class="compact-card">
+          <div class="compact-card-image contain">
+            <img src="img/tools.jpg" alt="Herramientas de aula">
+          </div>
+          <div class="tag-row">
+            <span class="tag">Herramientas</span>
+            <span class="tag">Aula</span>
+          </div>
+          <h3>Herramientas</h3>
+          <p>Radar de ruido y pizarras para usar en clase.</p>
+          <button class="btn primary detail-open" type="button" data-detail="radar">Detalles</button>
+        </article>
+
+        <article class="compact-card">
+          <div class="compact-card-image">
+            <img src="img/meteo.png" alt="Meteoescuela">
+          </div>
+          <div class="tag-row">
+            <span class="tag">Meteo</span>
+            <span class="tag">Escuela</span>
+          </div>
+          <h3>Meteoescuela</h3>
+          <p>Espacio meteorológico educativo.</p>
+          <button class="btn primary detail-open" type="button" data-detail="meteo">Detalles</button>
+        </article>
+
+        <article class="compact-card">
+          <div class="compact-card-image">
+            <img src="https://img.youtube.com/vi/-fdEfXGIb9A/hqdefault.jpg" alt="Entrevista sobre Maximilian 23 en Canal Extremadura">
+          </div>
+          <div class="tag-row">
+            <span class="tag">Medios</span>
+            <span class="tag">Entrevista</span>
+          </div>
+          <h3>Medios</h3>
+          <p>Entrevista en Canal Extremadura sobre Maximilian 23.</p>
+          <button class="btn primary detail-open" type="button" data-detail="medios">Detalles</button>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    &copy; <span id="year"></span> Manuel M. Frutos - Todos los derechos reservados
+  </footer>
+
+  <div class="modal-overlay" id="detailModal" style="display:none">
+    <div class="modal-content">
+      <button class="close-btn" id="closeDetail" aria-label="Cerrar">&times;</button>
+      <div id="detailContent" class="detail-modal-body"></div>
+    </div>
+  </div>
+
+  <script src="main.js"></script>
+  <script>
+    const detailModal = document.getElementById('detailModal');
+    const detailContent = document.getElementById('detailContent');
+    const closeDetail = document.getElementById('closeDetail');
+
+    const details = {
+      asistente: {
+        title: 'Asistente Maximilian 23',
+        tags: ['Asistente', 'IA educativa'],
+        text: 'Entrada principal del ecosistema Maximilian 23: un asistente conversacional para orientar a alumnado, familias y profesorado.',
+        href: 'https://maximilian23.com/',
+        action: 'Abrir asistente'
+      },
+      lab: {
+        title: 'Laboratorio Musical',
+        tags: ['Música', 'Práctica'],
+        text: 'Espacio interactivo para trabajar lectura musical, ritmo, escucha y creatividad desde el aula.',
+        href: 'https://maximilian23.com/lab23/',
+        action: 'Explorar laboratorio'
+      },
+      radio: {
+        title: 'Radio Maximilian 23',
+        tags: ['Audiciones', 'Música'],
+        text: 'Reproductor para escuchar las audiciones musicales trabajadas en clase, con controles de reproducción para repasarlas y reconocerlas fuera del aula.',
+        href: 'https://maximilian23.com/radio/',
+        action: 'Escuchar audiciones'
+      },
+      plastica: {
+        title: 'Plástica',
+        tags: ['Plástica', 'Creatividad'],
+        text: 'Área creativa para propuestas visuales, actividades artísticas y recursos vinculados al proyecto.',
+        href: 'https://maximilian23.com/arte/',
+        action: 'Abrir Plástica'
+      },
+      radar: {
+        title: 'Herramientas',
+        tags: ['Radar', 'Pizarras'],
+        text: 'Sección con herramientas útiles para el aula: un radar para controlar el ruido en clase y distintas pizarras para proyectar o trabajar directamente, con fondo negro, blanco, cuadrícula o pentagrama.',
+        href: 'https://maximilian23.com/radar/',
+        action: 'Abrir herramientas'
+      },
+      meteo: {
+        title: 'Meteoescuela',
+        tags: ['Meteo', 'Escuela'],
+        text: 'Espacio meteorológico educativo para acercar la observación del tiempo al trabajo de aula.',
+        href: 'https://maximilian23.com/meteored',
+        action: 'Abrir Meteoescuela'
+      },
+      medios: {
+        title: 'Medios',
+        tags: ['Medios', 'Canal Extremadura'],
+        text: 'Entrevista realizada en Canal Extremadura a raíz de Maximilian 23 y su uso como proyecto educativo.',
+        videoId: '-fdEfXGIb9A',
+        videoTitle: 'Entrevista sobre Maximilian 23 en Canal Extremadura',
+        href: 'https://www.youtube.com/watch?v=-fdEfXGIb9A',
+        action: 'Ver en YouTube'
+      }
+    };
+
+    function openDetail(key) {
+      const item = details[key];
+      if (!item) return;
+      detailContent.innerHTML = `
+        <div class="tag-row">${item.tags.map(tag => `<span class="tag">${tag}</span>`).join('')}</div>
+        <h2>${item.title}</h2>
+        <p>${item.text}</p>
+        ${item.videoId ? `<div class="youtube-embed" data-youtube-id="${item.videoId}" data-youtube-title="${item.videoTitle}"></div>` : ''}
+        <a class="btn primary" href="${item.href}" target="_blank" rel="noopener">${item.action}</a>
+      `;
+      if (window.renderYoutubeEmbeds) {
+        window.renderYoutubeEmbeds(detailContent);
+      }
+      detailModal.style.display = 'flex';
+    }
+
+    function closeDetailModal() {
+      detailModal.style.display = 'none';
+      detailContent.innerHTML = '';
+    }
+
+    document.querySelectorAll('.detail-open').forEach(btn => {
+      btn.addEventListener('click', () => openDetail(btn.dataset.detail));
+    });
+    closeDetail.addEventListener('click', closeDetailModal);
+    detailModal.addEventListener('click', e => { if (e.target === detailModal) closeDetailModal(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDetailModal(); });
+  </script>
+</body>
+</html>

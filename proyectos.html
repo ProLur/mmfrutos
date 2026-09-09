@@ -1,0 +1,114 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Proyectos musicales de Manuel M. Frutos: bandas sonoras, composiciones originales y proyectos electronicos.">
+  <title>Proyectos musicales - Manuel M. Frutos</title>
+  <link rel="stylesheet" href="style.css?v=20260525">
+</head>
+<body>
+
+  <nav>
+    <div class="logo"><a href="index.html"><img src="img/logo.png" alt="Manuel M. Frutos"></a></div>
+    <button class="menu-toggle" id="menuBtn" aria-label="Abrir menu">&#9776;</button>
+    <ul id="menu" role="navigation">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="proyectos.html" class="active">Proyectos musicales</a></li>
+      <li><a href="entretenimiento.html">Entretenimiento</a></li>
+      <li><a href="maximilian23.html">Maximilian 23</a></li>
+      <li><a href="agente.html">Agente IA</a></li>
+      <li><a href="contacto.html">Contacto</a></li>
+    </ul>
+  </nav>
+
+  <main class="page-main stack">
+    <section>
+      <span class="eyebrow">Música</span>
+      <p class="section-intro">
+        Una selección de trabajos musicales que recorren composición, producción propia, proyectos electrónicos y música para imagen.
+      </p>
+
+      <div class="compact-grid">
+        <article class="compact-card">
+          <div class="compact-card-image contain">
+            <img src="img/icaro.jpg" alt="Carátula de Ícaro Caído">
+          </div>
+          <div class="tag-row">
+            <span class="tag">Disco</span>
+            <span class="tag">Spotify</span>
+          </div>
+          <h3>Ícaro Caído</h3>
+          <p>Nueve canciones nacidas desde la guitarra y vestidas con armonización pop.</p>
+          <a href="#" id="openIcaro" class="btn primary">Ver ficha</a>
+        </article>
+
+        <article class="compact-card">
+          <div class="compact-card-image">
+            <img src="img/peli.jpg" alt="La Guerra de los Malditos">
+          </div>
+          <div class="tag-row">
+            <span class="tag">Banda sonora</span>
+            <span class="tag">Cine</span>
+          </div>
+          <h3>La Guerra de los Malditos</h3>
+          <p>Musica para un proyecto cinematografico ambientado en la posguerra espanola.</p>
+          <a href="#" id="openMaquis" class="btn primary">Ver ficha</a>
+        </article>
+
+        <article class="compact-card">
+          <div class="compact-card-image">
+            <img src="https://img.youtube.com/vi/fb-RpB6cYxU/hqdefault.jpg" alt="I Walk Alone - Manuel M. Frutos">
+          </div>
+          <div class="tag-row">
+            <span class="tag">Cancion</span>
+            <span class="tag">Streaming</span>
+          </div>
+          <h3>Bajo Manuel M. Frutos</h3>
+          <p>Temas propios, memoria familiar y produccion actual.</p>
+          <a href="#" id="openBajo" class="btn primary">Ver ficha</a>
+        </article>
+
+        <article class="compact-card">
+          <div class="compact-card-image">
+            <img src="img/bynox2.jpg" alt="Bynox Core">
+          </div>
+          <div class="tag-row">
+            <span class="tag">Electronica</span>
+            <span class="tag">EDM</span>
+          </div>
+          <h3>Bynox Core</h3>
+          <p>Eurodance, energia de pista y melodias futuristas.</p>
+          <a href="#" id="openBynox" class="btn primary">Ver ficha</a>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    &copy; <span id="year"></span> Manuel M. Frutos - Todos los derechos reservados
+  </footer>
+
+  <div class="modal-overlay" id="modalProyectos" style="display:none">
+    <div class="modal-content modal-content-wide">
+      <button class="close-btn" id="closeProyectos" aria-label="Cerrar">&times;</button>
+      <div id="proyectosContainer">Cargando...</div>
+    </div>
+  </div>
+
+  <script src="main.js"></script>
+  <script>
+    const projectModal = createIframeModal({
+      modal: document.getElementById('modalProyectos'),
+      container: document.getElementById('proyectosContainer'),
+      closeButton: document.getElementById('closeProyectos')
+    });
+
+    document.getElementById('openIcaro').addEventListener('click', e => { e.preventDefault(); projectModal.open('icaro.html'); });
+    document.getElementById('openMaquis').addEventListener('click', e => { e.preventDefault(); projectModal.open('maquis.html'); });
+    document.getElementById('openBajo').addEventListener('click',   e => { e.preventDefault(); projectModal.open('bajo.html'); });
+    document.getElementById('openBynox').addEventListener('click',  e => { e.preventDefault(); projectModal.open('bynox.html'); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') projectModal.close(); });
+  </script>
+</body>
+</html>

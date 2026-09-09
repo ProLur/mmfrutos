@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Obras narrativas y proyectos editoriales de Manuel M. Frutos.">
+  <title>Entretenimiento - Manuel M. Frutos</title>
+  <link rel="stylesheet" href="style.css?v=20260525">
+</head>
+<body>
+
+  <nav>
+    <div class="logo"><a href="index.html"><img src="img/logo.png" alt="Manuel M. Frutos"></a></div>
+    <button class="menu-toggle" id="menuBtn" aria-label="Abrir menu">&#9776;</button>
+    <ul id="menu" role="navigation">
+      <li><a href="index.html">Inicio</a></li>
+      <li><a href="proyectos.html">Proyectos musicales</a></li>
+      <li><a href="entretenimiento.html" class="active">Entretenimiento</a></li>
+      <li><a href="maximilian23.html">Maximilian 23</a></li>
+      <li><a href="agente.html">Agente IA</a></li>
+      <li><a href="contacto.html">Contacto</a></li>
+    </ul>
+  </nav>
+
+  <main class="page-main stack">
+    <section>
+      <span class="eyebrow">Obras</span>
+      <p class="section-intro">
+        Espacio para proyectos narrativos, editoriales y colaboraciones creativas vinculadas a videojuegos, historia y aula.
+      </p>
+
+      <div class="compact-grid">
+        <article class="compact-card">
+          <div class="compact-card-image contain">
+            <img src="img/libro.jpg" alt="Portada de Nuestra Historia">
+          </div>
+          <div class="tag-row">
+            <span class="tag">Libro</span>
+            <span class="tag">Aula</span>
+          </div>
+          <h3>Nuestra Historia: Una historia de visigodos</h3>
+          <p>Trabajo narrativo realizado con los niños en clase.</p>
+          <a href="#" id="openLibro" class="btn primary">Ver ficha</a>
+        </article>
+
+        <article class="compact-card">
+          <div class="compact-card-image">
+            <img src="https://img.youtube.com/vi/mdoqcqvGsyw/hqdefault.jpg" alt="Almendralejo, 1936">
+          </div>
+          <div class="tag-row">
+            <span class="tag">Mod</span>
+            <span class="tag">Mapa</span>
+          </div>
+          <h3>Almendralejo, 1936</h3>
+          <p>Mapa para el mod <a class="inline-link" href="https://es.wikipedia.org/wiki/1936,_Espa%C3%B1a_en_llamas" target="_blank" rel="noopener"><em>1936, España en llamas</em></a>.</p>
+          <a href="#" id="openAlmendralejo" class="btn primary">Ver ficha</a>
+        </article>
+      </div>
+    </section>
+  </main>
+
+  <footer>
+    &copy; <span id="year"></span> Manuel M. Frutos - Todos los derechos reservados
+  </footer>
+
+  <div class="modal-overlay" id="modalEntretenimiento" style="display:none">
+    <div class="modal-content">
+      <button class="close-btn" id="closeEntretenimiento" aria-label="Cerrar">&times;</button>
+      <div id="entretenimientoContainer">Cargando...</div>
+    </div>
+  </div>
+
+  <script src="main.js"></script>
+  <script>
+    const entertainmentModal = createIframeModal({
+      modal: document.getElementById('modalEntretenimiento'),
+      container: document.getElementById('entretenimientoContainer'),
+      closeButton: document.getElementById('closeEntretenimiento'),
+      desktopRatio: 0.86
+    });
+
+    document.getElementById('openLibro').addEventListener('click', e => { e.preventDefault(); entertainmentModal.open('libro.html'); });
+    document.getElementById('openAlmendralejo').addEventListener('click', e => { e.preventDefault(); entertainmentModal.open('almendralejo.html'); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') entertainmentModal.close(); });
+  </script>
+
+</body>
+</html>
