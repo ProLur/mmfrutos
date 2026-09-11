@@ -1,3 +1,148 @@
+@import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700;800&display=swap');
+
+*, *::before, *::after { box-sizing: border-box; }
+
+:root {
+  --bg: #0c0710;
+  --surface: rgba(255, 255, 255, 0.045);
+  --surface-hover: rgba(255, 255, 255, 0.078);
+  --surface-strong: rgba(20, 12, 24, 0.94);
+  --line: rgba(255, 255, 255, 0.11);
+  --line-strong: rgba(255, 255, 255, 0.2);
+  --text: #f7f2f6;
+  --muted: #b7a4b6;
+  --accent: #e64fc4;
+  --accent-strong: #ff85dd;
+  --accent-ink: #2c0a24;
+  --accent-rgb: 230, 79, 196;
+  --accent-2: #caa24a;
+  --accent-2-ink: #241704;
+  --accent-2-rgb: 202, 162, 74;
+  --danger: #ff5b6e;
+  --radius-sm: 10px;
+  --radius-md: 16px;
+  --radius-lg: 22px;
+  --shadow-sm: 0 10px 26px rgba(0, 0, 0, 0.28);
+  --shadow-md: 0 22px 48px rgba(0, 0, 0, 0.36);
+  --shadow-lg: 0 32px 74px rgba(0, 0, 0, 0.44);
+  --font-display: "Space Grotesk", Inter, "Segoe UI", Arial, sans-serif;
+  --font-body: Inter, "Segoe UI", Arial, sans-serif;
+}
+
+html { scroll-behavior: smooth; }
+
+body {
+  min-height: 100vh;
+  margin: 0;
+  font-family: var(--font-body);
+  background-color: var(--bg);
+  background-image:
+    radial-gradient(1000px 600px at 10% -12%, rgba(230, 79, 196, 0.17), transparent 58%),
+    radial-gradient(900px 600px at 104% 4%, rgba(202, 162, 74, 0.1), transparent 55%),
+    linear-gradient(180deg, rgba(12, 7, 16, 0.86), rgba(12, 7, 16, 0.98));
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  color: var(--text);
+  overflow-x: hidden;
+}
+
+img { max-width: 100%; }
+a, button, input { font: inherit; }
+p { color: var(--muted); }
+h1, h2, h3 { font-family: var(--font-display); letter-spacing: -0.01em; }
+
+a:focus-visible,
+button:focus-visible,
+input:focus-visible {
+  outline: 2px solid var(--accent-strong);
+  outline-offset: 3px;
+}
+
+/* ===== CABECERA PIDE ===== */
+.pide-topbar {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px clamp(18px, 4vw, 32px);
+  border-bottom: 1px solid var(--line);
+  background: rgba(12, 7, 16, 0.72);
+  -webkit-backdrop-filter: blur(18px);
+  backdrop-filter: blur(18px);
+  position: sticky;
+  top: 0;
+  z-index: 20;
+}
+
+.pide-topbar a {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  text-decoration: none;
+}
+
+.pide-topbar img {
+  height: 38px;
+  width: auto;
+  display: block;
+  border-radius: 6px;
+  background: #fff;
+  padding: 3px;
+}
+
+.pide-topbar-title {
+  font-family: var(--font-display);
+  font-weight: 700;
+  font-size: 1.05rem;
+  color: var(--text);
+  line-height: 1.15;
+}
+
+.pide-topbar-title small {
+  display: block;
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: 0.7rem;
+  color: var(--muted);
+  letter-spacing: 0.02em;
+}
+
+/* ===== BOTONES ===== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 42px;
+  padding: 10px 18px;
+  border-radius: var(--radius-sm);
+  border: 1px solid transparent;
+  font-weight: 800;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.25s ease, box-shadow 0.25s ease, background-color 0.25s ease, border-color 0.25s ease;
+}
+
+.btn:hover, .btn:active { transform: translateY(-2px); }
+
+.btn.primary {
+  color: var(--accent-ink);
+  background: linear-gradient(135deg, var(--accent), var(--accent-strong));
+  box-shadow: 0 14px 30px rgba(var(--accent-rgb), 0.26);
+}
+
+.btn.primary:hover { box-shadow: 0 18px 40px rgba(var(--accent-rgb), 0.36); }
+
+.btn.secondary {
+  color: var(--text);
+  background: var(--surface);
+  border-color: var(--line);
+}
+
+.btn.secondary:hover {
+  background: var(--surface-hover);
+  border-color: var(--line-strong);
+}
+
+/* ===== ESTADOS OCULTOS (evitar que otras reglas ganen a [hidden]) ===== */
 #pideSearchExit[hidden],
 #pideLoadMore[hidden],
 #pideNewPill[hidden] {
@@ -7,7 +152,7 @@
 .pide-shell {
   width: min(720px, calc(100% - 32px));
   margin: 0 auto;
-  padding: clamp(18px, 3vw, 30px) 0 60px;
+  padding: clamp(18px, 3vw, 30px) 0 40px;
 }
 
 .pide-header {
@@ -47,7 +192,7 @@
 
 .pide-search-form {
   position: sticky;
-  top: 68px;
+  top: 66px;
   z-index: 5;
   display: flex;
   gap: 8px;
@@ -78,7 +223,7 @@
 .pide-search-form input[type="search"]:focus {
   outline: none;
   border-color: var(--accent);
-  box-shadow: 0 0 0 4px rgba(0, 240, 192, 0.1);
+  box-shadow: 0 0 0 4px rgba(var(--accent-rgb), 0.14);
 }
 
 .pide-status {
@@ -217,7 +362,7 @@
 }
 
 .pide-preview-search mark {
-  background: rgba(0, 240, 192, 0.3);
+  background: rgba(var(--accent-rgb), 0.32);
   color: var(--text);
   border-radius: 3px;
   padding: 0 2px;
@@ -242,7 +387,7 @@
   border-radius: 999px;
 }
 
-.pide-tag-closed { color: var(--accent-2); border-color: rgba(255, 184, 107, 0.35); }
+.pide-tag-closed { color: var(--accent-2); border-color: rgba(var(--accent-2-rgb), 0.4); }
 
 .pide-chevron {
   flex: none;
@@ -259,6 +404,10 @@
   border-top: 1px solid var(--line);
   display: grid;
   gap: 12px;
+}
+
+.pide-thread[hidden] {
+  display: none;
 }
 
 .pide-msg {
@@ -289,7 +438,7 @@
   overflow-wrap: anywhere;
 }
 
-.pide-msg-text a { color: var(--accent); font-weight: 700; text-decoration: underline; text-decoration-color: rgba(0, 240, 192, 0.5); }
+.pide-msg-text a { color: var(--accent); font-weight: 700; text-decoration: underline; text-decoration-color: rgba(var(--accent-rgb), 0.55); }
 
 .pide-external {
   display: inline-flex;
@@ -301,12 +450,12 @@
   font-weight: 700;
   color: var(--accent);
   text-decoration: none;
-  background: rgba(0, 240, 192, 0.08);
-  border: 1px solid rgba(0, 240, 192, 0.28);
+  background: rgba(var(--accent-rgb), 0.09);
+  border: 1px solid rgba(var(--accent-rgb), 0.3);
   border-radius: var(--radius-sm);
 }
 
-.pide-external:hover { background: rgba(0, 240, 192, 0.14); }
+.pide-external:hover { background: rgba(var(--accent-rgb), 0.16); }
 
 .pide-loading {
   padding: 14px 16px;
@@ -334,8 +483,23 @@
   font-weight: 800;
   font-size: 0.86rem;
   cursor: pointer;
-  box-shadow: 0 16px 34px rgba(0, 240, 192, 0.32);
+  box-shadow: 0 16px 34px rgba(var(--accent-rgb), 0.34);
 }
+
+.pide-credit {
+  text-align: center;
+  padding: 10px 16px 34px;
+  font-size: 0.78rem;
+  color: var(--muted);
+}
+
+.pide-credit a {
+  color: var(--accent);
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.pide-credit a:hover { text-decoration: underline; }
 
 @media (max-width: 560px) {
   .pide-search-form { top: 0; }
