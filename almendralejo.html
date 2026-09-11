@@ -4,48 +4,34 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Almendralejo, 1936</title>
-  <style>
-    body { margin: 0; background: #111; color: #e6edf3; font-family: Arial, sans-serif; }
-    .ficha-main { max-width: 900px; margin: auto; padding: 10px; color: inherit; }
-    .ficha-contenido { display: flex; flex-wrap: wrap; gap: 14px; align-items: flex-start; }
-    .ficha-imagen { flex: 0 1 210px; min-width: 180px; }
-    .youtube-embed { max-width: 210px; border-radius: 8px; overflow: hidden; border: 1px solid rgba(255,255,255,0.12); background: #000; }
-    .youtube-embed iframe { width: 100%; display: block; aspect-ratio: 16 / 9; border: 0; }
-    .ficha-texto { flex: 1 1 420px; min-width: 260px; font-size: 0.94rem; line-height: 1.45; text-align: justify; }
-    .ficha-texto h1 { margin: 0 0 8px; font-size: 1.55rem; }
-    .ficha-texto p { margin: 0 0 8px; }
-    .ficha-datos { background: rgba(255,255,255,0.05); padding: 8px; margin-top: 8px; font-size: 0.82rem; border-radius: 6px; }
-    .ficha-datos p { margin: 4px 0; }
-    .youtube-link { display: inline-block; margin-top: 4px; color: #ff4444; font-weight: bold; text-decoration: none; }
-    .youtube-link:hover { text-decoration: underline; }
-    .wiki-link { color: #00ffcc; font-weight: bold; text-decoration: underline; text-underline-offset: 3px; }
-    .wiki-link:hover { color: #ffb86b; }
-  </style>
+  <link rel="stylesheet" href="style.css?v=20260912">
 </head>
 <body>
-<main class="ficha-main">
-  <div class="ficha-contenido">
-    <div class="ficha-imagen">
+<main class="detail-shell">
+  <div class="detail-grid">
+    <div class="detail-media">
       <div class="youtube-embed" data-youtube-id="mdoqcqvGsyw" data-youtube-title="Mapa de Almendralejo para 1936, España en llamas"></div>
-      <div class="ficha-datos">
+      <div class="detail-info">
         <p><strong>Periodo:</strong> 2003/2004</p>
         <p><strong>Proyecto:</strong> 1936, España en llamas</p>
         <p><strong>Tipo:</strong> Mapa para mod</p>
       </div>
     </div>
-    <div class="ficha-texto">
+    <div class="detail-body">
       <h1>Almendralejo, 1936</h1>
       <p>
-        Mapa de Almendralejo y Sierra de los Santos realizado para el mod <a class="wiki-link" href="https://es.wikipedia.org/wiki/1936,_Espa%C3%B1a_en_llamas" target="_blank" rel="noopener"><em>1936, España en llamas</em></a>, un proyecto que unía videojuegos, historia local y creación digital.
+        Mapa de Almendralejo y Sierra de los Santos realizado para el mod <a class="inline-link" href="https://es.wikipedia.org/wiki/1936,_Espa%C3%B1a_en_llamas" target="_blank" rel="noopener"><em>1936, España en llamas</em></a>, un proyecto que unía videojuegos, historia local y creación digital.
       </p>
       <p>
         En este trabajo colaboraron conmigo Primitivo Rojas y Fernando Sierra poniendo la voz, aportando una presencia humana a un mapa construido desde la memoria del territorio.
       </p>
-      <a class="youtube-link" href="https://www.youtube.com/watch?v=mdoqcqvGsyw" target="_blank" rel="noopener">Ver vídeo en YouTube</a>
+      <div class="platform-links">
+        <a class="platform-link youtube" href="https://www.youtube.com/watch?v=mdoqcqvGsyw" target="_blank" rel="noopener">Ver vídeo en YouTube</a>
+      </div>
     </div>
   </div>
 </main>
-<script src="main.js"></script>
+<script src="main.js?v=20260912"></script>
 <script>
   window.addEventListener('load', () => {
     if (window.parent && window.parent !== window) {

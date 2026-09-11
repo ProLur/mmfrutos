@@ -2,6 +2,13 @@ document.addEventListener('DOMContentLoaded', () => {
   const yearEl = document.getElementById('year');
   if (yearEl) yearEl.textContent = new Date().getFullYear();
 
+  const navEl = document.querySelector('nav');
+  if (navEl) {
+    const toggleScrolled = () => navEl.classList.toggle('scrolled', window.scrollY > 8);
+    toggleScrolled();
+    window.addEventListener('scroll', toggleScrolled, { passive: true });
+  }
+
   const menuBtn = document.getElementById('menuBtn');
   const menu    = document.getElementById('menu');
   if (menuBtn && menu) {
