@@ -283,7 +283,7 @@
 
     return (
       '<article class="pide-post" data-id="' + escapeHTML(thread.id) + '">' +
-        '<button class="pide-post-main" type="button" aria-expanded="false">' +
+        '<div class="pide-post-main" role="button" tabindex="0" aria-expanded="false">' +
           '<span class="pide-avatar" style="--av-color:' + colorForName(first.author) + '">' + initials(first.author) + '</span>' +
           '<span class="pide-post-body">' +
             '<span class="pide-post-head">' +
@@ -300,15 +300,15 @@
             '</span>' +
           '</span>' +
           '<span class="pide-chevron" aria-hidden="true">›</span>' +
-        '</button>' +
+        '</div>' +
         '<div class="pide-thread" hidden></div>' +
       '</article>'
     );
   }
 
-  function threadDetailHTML(thread) {
-    const msgsHTML = thread.messages.map(m => (
-      '<div class="pide-msg" style="--depth:' + Math.min(m.depth, 4) + '">' +
+  function msgRowHTML(m, depth) {
+    return (
+      '<div class="pide-msg" style="--depth:' + Math.min(depth, 4) + '">' +
         '<span class="pide-avatar pide-avatar-sm" style="--av-color:' + colorForName(m.author) + '">' + initials(m.author) + '</span>' +
         '<div class="pide-msg-body">' +
           '<div class="pide-msg-head">' +
@@ -320,23 +320,59 @@
           '<div class="pide-msg-text">' + (m.html || '<em>(mensaje vacío)</em>') + '</div>' +
         '</div>' +
       '</div>'
-    )).join('');
+    );
+  }
 
-    return msgsHTML + '<a class="pide-external" href="' + FORO_BASE + 'index.php?hilo=' + encodeURIComponent(thread.id) + '" target="_blank" rel="noopener noreferrer">Ver y responder en sindicatopide.org ↗</a>';
+  function externalLinkHTML(hiloId) {
+    return '<a class="pide-external" href="' + FORO_BASE + 'index.php?hilo=' + encodeURIComponent(hiloId) + '" target="_blank" rel="noopener noreferrer">Ver y responder en sindicatopide.org ↗</a>';
+  }
+
+  // Hilo completo (incluye el mensaje original): se usa cuando el OP aún no se ha mostrado en ningún sitio.
+  function fullThreadHTML(thread) {
+    const msgsHTML = thread.messages.map(m => msgRowHTML(m, m.depth)).join('');
+    return msgsHTML + externalLinkHTML(thread.id);
+  }
+
+  // Solo las respuestas (sin el OP, que ya se muestra completo en la propia tarjeta al expandir).
+  function repliesOnlyHTML(thread) {
+    const replies = thread.messages.slice(1);
+    const list = replies.length
+      ? replies.map(m => msgRowHTML(m, Math.max(0, m.depth - 1))).join('')
+      : '<p class="pide-loading">Todavía no hay respuestas.</p>';
+    return list + externalLinkHTML(thread.id);
   }
 
   function bindCard(article, thread) {
-    const btn = article.querySelector('.pide-post-main');
+    const row = article.querySelector('.pide-post-main');
+    const preview = article.querySelector('.pide-preview');
     const detail = article.querySelector('.pide-thread');
     let built = false;
-    btn.addEventListener('click', () => {
-      const expanded = btn.getAttribute('aria-expanded') === 'true';
+
+    function toggle() {
+      const expanded = row.getAttribute('aria-expanded') === 'true';
       if (!built) {
-        detail.innerHTML = threadDetailHTML(thread);
+        const first = thread.messages[0];
+        if (preview && first) {
+          preview.innerHTML = first.html || '';
+          preview.classList.add('pide-preview-expanded');
+        }
+        detail.innerHTML = repliesOnlyHTML(thread);
         built = true;
       }
-      btn.setAttribute('aria-expanded', String(!expanded));
+      row.setAttribute('aria-expanded', String(!expanded));
       detail.hidden = expanded;
+    }
+
+    row.addEventListener('click', e => {
+      if (e.target.closest('a')) return;
+      toggle();
+    });
+    row.addEventListener('keydown', e => {
+      if (e.target.closest('a')) return;
+      if (e.key === 'Enter' || e.key === ' ') {
+        e.preventDefault();
+        toggle();
+      }
     });
   }
 
@@ -466,7 +502,7 @@
         const html = await fetchHTML(FORO_BASE + 'index.php?hilo=' + encodeURIComponent(hiloId));
         const threads = parseForoDocument(html);
         detail.innerHTML = threads[0]
-          ? threadDetailHTML(threads[0])
+          ? fullThreadHTML(threads[0])
           : '<p class="pide-loading">No se pudo cargar. <a href="' + FORO_BASE + 'index.php?hilo=' + hiloId + '" target="_blank" rel="noopener noreferrer">Abrir en sindicatopide.org ↗</a></p>';
       } catch (e) {
         detail.innerHTML = '<p class="pide-loading">Error al cargar. <a href="' + FORO_BASE + 'index.php?hilo=' + hiloId + '" target="_blank" rel="noopener noreferrer">Abrir en sindicatopide.org ↗</a></p>';

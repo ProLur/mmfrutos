@@ -274,6 +274,11 @@ input:focus-visible {
 
 .pide-post-main:hover { background: var(--surface-hover); }
 
+.pide-post-main[role="button"]:focus-visible {
+  outline: 2px solid var(--accent-strong);
+  outline-offset: -2px;
+}
+
 .pide-avatar {
   flex: none;
   display: grid;
@@ -359,6 +364,20 @@ input:focus-visible {
   font-size: 0.9rem;
   line-height: 1.5;
   overflow-wrap: anywhere;
+}
+
+.pide-preview-expanded {
+  display: block;
+  -webkit-line-clamp: unset;
+  overflow: visible;
+  color: var(--text);
+}
+
+.pide-preview a {
+  color: var(--accent);
+  font-weight: 700;
+  text-decoration: underline;
+  text-decoration-color: rgba(var(--accent-rgb), 0.55);
 }
 
 .pide-preview-search mark {
