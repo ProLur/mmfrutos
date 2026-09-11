@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="Lector del foro del Sindicato PIDE, pensado para leerse bien en el móvil.">
+  <title>Foro PIDE - Manuel M. Frutos</title>
+  <link rel="stylesheet" href="../style.css?v=20260912">
+  <link rel="stylesheet" href="pide.css?v=20260912">
+</head>
+<body>
+
+  <nav>
+    <div class="logo"><a href="../index.html"><img src="../img/logo.png" alt="Manuel M. Frutos"></a></div>
+    <button class="menu-toggle" id="menuBtn" aria-label="Abrir menu">&#9776;</button>
+    <ul id="menu" role="navigation">
+      <li><a href="../index.html">Inicio</a></li>
+      <li><a href="../proyectos.html">Proyectos musicales</a></li>
+      <li><a href="../videojuegos.html">Videojuegos</a></li>
+      <li><a href="../entretenimiento.html">Entretenimiento</a></li>
+      <li><a href="../maximilian23.html">Maximilian 23</a></li>
+      <li><a href="../agente.html">Agente IA</a></li>
+      <li><a href="../contacto.html">Contacto</a></li>
+    </ul>
+  </nav>
+
+  <main class="pide-shell">
+    <div class="pide-header">
+      <div class="pide-header-row">
+        <h1>Foro PIDE</h1>
+        <div class="pide-toolbar">
+          <button class="btn secondary" id="pideRefresh" type="button">Actualizar</button>
+        </div>
+      </div>
+      <p class="pide-sub">
+        Los mensajes del <a href="https://www.sindicatopide.org/foros/" target="_blank" rel="noopener noreferrer">foro abierto del Sindicato PIDE</a>, en formato de lectura pensado para el móvil. Es de solo lectura: para responder, abre el hilo en sindicatopide.org.
+      </p>
+    </div>
+
+    <form class="pide-search-form" id="pideSearchForm">
+      <input type="search" id="pideSearchInput" placeholder="Buscar en el foro…" aria-label="Buscar en el foro">
+      <button class="btn primary" type="submit">Buscar</button>
+      <button class="btn secondary" id="pideSearchExit" type="button" hidden>Volver al muro</button>
+    </form>
+
+    <p class="pide-status" id="pideStatus" hidden></p>
+
+    <div class="pide-feed" id="pideFeed"></div>
+
+    <div class="pide-load-more-row">
+      <button class="btn secondary" id="pideLoadMore" type="button">Cargar hilos más antiguos</button>
+    </div>
+  </main>
+
+  <button class="pide-new-pill" id="pideNewPill" type="button" hidden></button>
+
+  <footer>
+    &copy; <span id="year"></span> Manuel M. Frutos - Todos los derechos reservados
+  </footer>
+
+  <script src="../main.js?v=20260912"></script>
+  <script src="pide.js?v=20260912"></script>
+</body>
+</html>
