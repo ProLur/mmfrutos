@@ -1175,11 +1175,6 @@ footer::before {
   transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
 }
 
-.explore-card .explore-icon {
-  font-size: 1.6rem;
-  line-height: 1;
-}
-
 .explore-card h3 {
   margin: 0;
   color: var(--text);
