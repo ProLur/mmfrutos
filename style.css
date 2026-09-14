@@ -1241,6 +1241,8 @@ footer::before {
   flex: 1 1 320px;
   min-width: 260px;
   line-height: 1.65;
+  padding-block: 14px 20px;
+  box-sizing: border-box;
 }
 
 .detail-body h1 {
