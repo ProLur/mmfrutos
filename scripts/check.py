@@ -35,5 +35,9 @@ for name,p in pages.items():
             assert url.fragment in pages[target.name].ids, f'{name}: missing fragment {ref}'
 assert len(pages)==15, f'Expected 15 portfolio pages, got {len(pages)}'
 assert len(re.findall(r'\[\'\d\d ',(ROOT/'player.js').read_text(encoding='utf-8')))==9
-subprocess.run(['git','diff','--exit-code','main','--','pide/','.github/','CNAME','.nojekyll'],cwd=ROOT,check=True)
-print(f'PASS: {len(pages)} pages; local links, images, unique IDs, main headings and descriptions; 9 tracks; PIDE and deployment configuration unchanged.')
+if (ROOT/'.git').exists():
+    subprocess.run(['git','diff','--exit-code','main','--','pide/','.github/','CNAME','.nojekyll'],cwd=ROOT,check=True)
+    print('PASS: PIDE and deployment configuration unchanged against main.')
+else:
+    print('Portable copy: Git comparison skipped; run in the repository to check excluded files.')
+print(f'PASS: {len(pages)} pages; local links, images, unique IDs, main headings and descriptions; 9 tracks.')
