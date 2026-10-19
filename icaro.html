@@ -1,13 +1,12 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ícaro Caído</title>
-  <link rel="stylesheet" href="style.css?v=20260916">
-</head>
-<body>
-<main class="detail-shell">
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Mi primer disco, autopublicado con el productor Alejandro de Pinedo."><meta name="theme-color" content="#f4f1e9">
+<meta property="og:title" content="Ícaro Caído · Manuel M. Frutos"><meta property="og:description" content="Mi primer disco, autopublicado con el productor Alejandro de Pinedo."><meta property="og:type" content="website">
+<title>Ícaro Caído · Manuel M. Frutos</title><link rel="stylesheet" href="style.css?v=editorial1"><script src="main.js?v=editorial1" defer></script><script src="player.js" defer></script></head>
+<body><a class="skip" href="#contenido">Saltar al contenido</a>
+<header class="site-header"><a class="wordmark" href="index.html" aria-label="Manuel M. Frutos, inicio">Manuel M. Frutos<span>Música · tecnología · aula</span></a>
+<nav aria-label="Navegación principal"><button id="menuBtn" aria-expanded="false" aria-controls="menu">Menú <span aria-hidden="true">＋</span></button><ul id="menu"><li><a href="index.html">Inicio</a></li><li><a href="archivo.html" aria-current="page">Proyectos</a></li><li><a href="sobre-mi.html">Sobre mí</a></li><li><a href="contacto.html">Contacto</a></li></ul></nav></header>
+<div class="breadcrumb"><a class="text-link" href="archivo.html">← Todos los proyectos</a><span>Ícaro Caído</span></div><main class="detail-shell" id="contenido">
   <div class="detail-grid">
     <div class="detail-media">
       <img src="img/icaro.jpg" alt="Carátula de Ícaro Caído">
@@ -39,157 +38,24 @@
       <div class="video-grid">
         <div class="video-card">
           <p>Ni mirarte</p>
-          <div class="youtube-embed" data-youtube-id="STLiND6it1E" data-youtube-title="Ni mirarte - Ícaro Caído"></div>
+          <div class="youtube-embed" data-youtube-id="STLiND6it1E" data-youtube-title="Ni mirarte - Ícaro Caído"><noscript><a href="https://www.youtube.com/watch?v=STLiND6it1E">Ver Ni mirarte - Ícaro Caído en YouTube ↗</a></noscript></div>
         </div>
         <div class="video-card">
           <p>Entrevista</p>
-          <div class="youtube-embed" data-youtube-id="i00pXYh7f54" data-youtube-title="Entrevista sobre Ícaro Caído"></div>
+          <div class="youtube-embed" data-youtube-id="i00pXYh7f54" data-youtube-title="Entrevista sobre Ícaro Caído"><noscript><a href="https://www.youtube.com/watch?v=i00pXYh7f54">Ver Entrevista sobre Ícaro Caído en YouTube ↗</a></noscript></div>
         </div>
       </div>
     </div>
 
     <section class="audio-player" aria-labelledby="icaro-player-title">
       <h2 id="icaro-player-title">Canciones de Ícaro Caído</h2>
-      <p class="audio-now" id="audioNow">Selecciona una canción para escucharla.</p>
-      <audio id="icaroAudio" controls preload="metadata"></audio>
+      <p class="audio-now" id="audioNow" aria-live="polite">Selecciona una canción para escucharla.</p>
+      <audio id="icaroAudio" controls preload="none" aria-label="Reproductor de Ícaro Caído" hidden></audio>
       <div class="track-list" id="trackList"></div>
-      <p class="audio-note" id="audioNote">Los audios se cargarán desde la carpeta mp3.</p>
+      <p class="audio-note" id="audioNote" role="status">Selecciona una canción. También puedes escuchar el disco en Spotify.</p>
     </section>
   </div>
-</main>
+<aside class="next-project"><a class="text-link" href="archivo.html">Seguir explorando el archivo →</a></aside></main>
 
-<script src="main.js?v=20260915"></script>
-<script>
-  const fallbackTracks = [
-    { file: '01 Ni mirarte.mp3', title: 'Ni mirarte' },
-    { file: '02 Perpetua.mp3', title: 'Perpetua' },
-    { file: '03 Volando.mp3', title: 'Volando' },
-    { file: '04 La quiero.mp3', title: 'La quiero' },
-    { file: '05 No vuelvas más.mp3', title: 'No vuelvas más' },
-    { file: '06 Misterio.mp3', title: 'Misterio' },
-    { file: '07 Mi cancerbero.mp3', title: 'Mi cancerbero' },
-    { file: '08 No puedo más.mp3', title: 'No puedo más' },
-    { file: '09 El alma.mp3', title: 'El alma' }
-  ];
-
-  const audio = document.getElementById('icaroAudio');
-  const trackList = document.getElementById('trackList');
-  const audioNow = document.getElementById('audioNow');
-  const audioNote = document.getElementById('audioNote');
-  let activeButton = null;
-  let activeTrack = null;
-  let currentTrackIndex = -1;
-  let loadedTracks = [];
-  let usingAltPath = false;
-
-  function parseTrackLine(line) {
-    const cleanLine = line.trim();
-    if (!cleanLine || cleanLine.startsWith('#')) return null;
-
-    const parts = cleanLine.split(/\s+-\s+/);
-    if (parts.length < 2) return null;
-
-    const left = parts.shift().trim();
-    const right = parts.join(' - ').trim();
-    const leftIsAudio = /\.mp3$/i.test(left);
-    const rightIsAudio = /\.mp3$/i.test(right);
-
-    if (leftIsAudio) return { file: left, title: right || left };
-    if (rightIsAudio) return { file: right, title: left || right };
-    return null;
-  }
-
-  async function loadTrackList() {
-    const sources = ['mp3/lista.txt', 'lista/lista.txt'];
-
-    for (const source of sources) {
-      try {
-        const response = await fetch(source, { cache: 'no-store' });
-        if (!response.ok) continue;
-
-        const text = await response.text();
-        const tracks = text.split(/\r?\n/).map(parseTrackLine).filter(Boolean);
-        if (tracks.length) return tracks;
-      } catch (error) {
-        // Si se abre la ficha como archivo local, algunos navegadores bloquean fetch.
-      }
-    }
-
-    return fallbackTracks;
-  }
-
-  function setTrack(index, shouldPlay = true) {
-    const track = loadedTracks[index];
-    if (!track) return;
-
-    activeTrack = track;
-    currentTrackIndex = index;
-    usingAltPath = false;
-    if (activeButton) activeButton.classList.remove('active');
-    activeButton = trackList.querySelector(`[data-track-index="${index}"]`);
-    if (activeButton) activeButton.classList.add('active');
-    audioNow.textContent = track.title;
-    audioNote.textContent = 'Preparado desde mp3/' + track.file;
-    audio.src = 'mp3/' + track.file;
-    if (shouldPlay) {
-      audioNote.textContent = 'Reproduciendo desde mp3/' + track.file;
-      audio.play().catch(() => {});
-    }
-  }
-
-  function renderTracks(tracks) {
-    loadedTracks = tracks;
-    trackList.innerHTML = '';
-
-    tracks.forEach((track, index) => {
-      const button = document.createElement('button');
-      button.type = 'button';
-      button.className = 'track-button';
-      button.dataset.trackIndex = String(index);
-      button.textContent = `${index + 1}. ${track.title}`;
-      button.addEventListener('click', () => setTrack(index));
-      trackList.appendChild(button);
-    });
-
-    if (tracks.length) {
-      setTrack(0, false);
-    }
-
-    if (window.parent && window.parent !== window) {
-      window.parent.postMessage({ type: 'resize-project-modal' }, '*');
-    }
-  }
-
-  audio.addEventListener('play', () => {
-    if (currentTrackIndex === -1 && loadedTracks.length) {
-      setTrack(0);
-    }
-  });
-
-  audio.addEventListener('ended', () => {
-    const nextIndex = currentTrackIndex + 1;
-    if (nextIndex < loadedTracks.length) {
-      setTrack(nextIndex);
-      return;
-    }
-
-    audioNow.textContent = 'Disco terminado.';
-    audioNote.textContent = 'Has escuchado Ícaro Caído completo.';
-    currentTrackIndex = -1;
-    activeTrack = null;
-    if (activeButton) activeButton.classList.remove('active');
-    activeButton = null;
-  });
-
-  audio.addEventListener('error', () => {
-    if (!activeTrack || usingAltPath) return;
-    usingAltPath = true;
-    audioNote.textContent = 'No se encontró en mp3; probando en lista/' + activeTrack.file;
-    audio.src = 'lista/' + activeTrack.file;
-    audio.play().catch(() => {});
-  });
-
-  loadTrackList().then(renderTracks);
-</script>
-</body>
-</html>
+<footer class="site-footer"><a class="wordmark" href="index.html">Manuel M. Frutos</a><p>Un archivo de música, ideas y cosas que voy haciendo.</p><div><span>© <span id="year">2026</span></span><a class="text-link" href="mailto:mmfrutos@mmfrutos.com">Escríbeme ↗</a><a class="text-link" href="archivo.html">Explorar proyectos</a></div></footer>
+</body></html>

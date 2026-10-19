@@ -1,89 +1,11 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta name="description" content="Obras narrativas y proyectos editoriales de Manuel M. Frutos.">
-  <title>Entretenimiento - Manuel M. Frutos</title>
-  <link rel="stylesheet" href="style.css?v=20260915">
-</head>
-<body>
-
-  <nav>
-    <div class="logo"><a href="index.html"><img src="img/logo.png" alt="Manuel M. Frutos"></a></div>
-    <button class="menu-toggle" id="menuBtn" aria-label="Abrir menu">&#9776;</button>
-    <ul id="menu" role="navigation">
-      <li><a href="index.html">Inicio</a></li>
-      <li><a href="proyectos.html">Proyectos musicales</a></li>
-      <li><a href="videojuegos.html">Videojuegos</a></li>
-      <li><a href="entretenimiento.html" class="active">Entretenimiento</a></li>
-      <li><a href="maximilian23.html">Maximilian 23</a></li>
-      <li><a href="agente.html">Agente IA</a></li>
-      <li><a href="contacto.html">Contacto</a></li>
-    </ul>
-  </nav>
-
-  <main class="page-main stack">
-    <section>
-      <span class="eyebrow">Obras</span>
-      <p class="section-intro">
-        Espacio para proyectos narrativos, editoriales y colaboraciones creativas vinculadas a videojuegos, historia y aula.
-      </p>
-
-      <div class="compact-grid">
-        <article class="compact-card">
-          <div class="compact-card-image contain">
-            <img src="img/libro.jpg" alt="Portada de Nuestra Historia">
-          </div>
-          <div class="tag-row">
-            <span class="tag">Libro</span>
-            <span class="tag">Aula</span>
-          </div>
-          <h3>Nuestra Historia: Una historia de visigodos</h3>
-          <p>Trabajo narrativo realizado con los niños en clase.</p>
-          <a href="#" id="openLibro" class="btn primary">Ver ficha</a>
-        </article>
-
-        <article class="compact-card">
-          <div class="compact-card-image">
-            <img src="https://img.youtube.com/vi/mdoqcqvGsyw/hqdefault.jpg" alt="Almendralejo, 1936">
-          </div>
-          <div class="tag-row">
-            <span class="tag">Mod</span>
-            <span class="tag">Mapa</span>
-          </div>
-          <h3>Almendralejo, 1936</h3>
-          <p>Mapa para el mod <a class="inline-link" href="https://es.wikipedia.org/wiki/1936,_Espa%C3%B1a_en_llamas" target="_blank" rel="noopener"><em>1936, España en llamas</em></a>.</p>
-          <a href="#" id="openAlmendralejo" class="btn primary">Ver ficha</a>
-        </article>
-      </div>
-    </section>
-  </main>
-
-  <footer>
-    &copy; <span id="year"></span> Manuel M. Frutos - Todos los derechos reservados
-  </footer>
-
-  <div class="modal-overlay" id="modalEntretenimiento" style="display:none">
-    <div class="modal-content">
-      <button class="close-btn" id="closeEntretenimiento" aria-label="Cerrar">&times;</button>
-      <div id="entretenimientoContainer">Cargando...</div>
-    </div>
-  </div>
-
-  <script src="main.js?v=20260915"></script>
-  <script>
-    const entertainmentModal = createIframeModal({
-      modal: document.getElementById('modalEntretenimiento'),
-      container: document.getElementById('entretenimientoContainer'),
-      closeButton: document.getElementById('closeEntretenimiento'),
-      desktopRatio: 0.86
-    });
-
-    document.getElementById('openLibro').addEventListener('click', e => { e.preventDefault(); entertainmentModal.open('libro.html'); });
-    document.getElementById('openAlmendralejo').addEventListener('click', e => { e.preventDefault(); entertainmentModal.open('almendralejo.html'); });
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') entertainmentModal.close(); });
-  </script>
-
-</body>
-</html>
+<!doctype html>
+<html lang="es"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="description" content="Escritura, historia local y proyectos que empezaron por curiosidad."><meta name="theme-color" content="#f4f1e9">
+<meta property="og:title" content="Historias y otros mundos. · Manuel M. Frutos"><meta property="og:description" content="Escritura, historia local y proyectos que empezaron por curiosidad."><meta property="og:type" content="website">
+<title>Historias y otros mundos. · Manuel M. Frutos</title><link rel="stylesheet" href="style.css?v=editorial1"><script src="main.js?v=editorial1" defer></script></head>
+<body><a class="skip" href="#contenido">Saltar al contenido</a>
+<header class="site-header"><a class="wordmark" href="index.html" aria-label="Manuel M. Frutos, inicio">Manuel M. Frutos<span>Música · tecnología · aula</span></a>
+<nav aria-label="Navegación principal"><button id="menuBtn" aria-expanded="false" aria-controls="menu">Menú <span aria-hidden="true">＋</span></button><ul id="menu"><li><a href="index.html">Inicio</a></li><li><a href="archivo.html" aria-current="page">Proyectos</a></li><li><a href="sobre-mi.html">Sobre mí</a></li><li><a href="contacto.html">Contacto</a></li></ul></nav></header>
+<main id="contenido"><header class="page-heading"><p class="kicker">Archivo personal / 02 proyectos</p><h1>Historias y otros mundos.</h1><p class="intro">Escritura, historia local y proyectos que empezaron por curiosidad.</p></header><div class="project-grid catalogue"><article class="project" data-category="Escritura"><a class="project-image album" href="libro.html" tabindex="-1" aria-hidden="true"><img src="img/libro.jpg" alt="Nuestra Historia" loading="lazy" width="800" height="600"><span class="image-arrow" aria-hidden="true">↗</span></a><div class="project-meta"><span>Escritura</span><span>2021</span></div><h2><a href="libro.html">Nuestra Historia</a></h2><p>Un dictado de clase que acabó convertido en una aventura escrita con mis alumnos.</p></article><article class="project" data-category="Videojuegos"><a class="project-image " href="almendralejo.html" tabindex="-1" aria-hidden="true"><div class="type-cover" aria-hidden="true">Almendralejo<span>1936</span></div><span class="image-arrow" aria-hidden="true">↗</span></a><div class="project-meta"><span>Videojuegos</span><span>2003 / 2004</span></div><h2><a href="almendralejo.html">Almendralejo, 1936</a></h2><p>Mapa para 1936, España en llamas, con las voces de Primitivo Rojas y Fernando Sierra.</p></article></div></main>
+<footer class="site-footer"><a class="wordmark" href="index.html">Manuel M. Frutos</a><p>Un archivo de música, ideas y cosas que voy haciendo.</p><div><span>© <span id="year">2026</span></span><a class="text-link" href="mailto:mmfrutos@mmfrutos.com">Escríbeme ↗</a><a class="text-link" href="archivo.html">Explorar proyectos</a></div></footer>
+</body></html>

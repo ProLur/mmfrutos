@@ -1,0 +1,66 @@
+[
+  {
+    "title": "Asistente Maximilian 23",
+    "text": "Entrada principal del ecosistema Maximilian 23: un asistente conversacional para orientar a alumnado, familias y profesorado.",
+    "href": "https://maximilian23.com/",
+    "action": "Abrir asistente"
+  },
+  {
+    "title": "Presentación",
+    "text": "Vídeo de presentación de Maximilian 23: cómo nació y cómo funciona esta inteligencia artificial educativa creada en el propio aula.",
+    "videoId": "R80q0sSQB_o",
+    "videoTitle": "Maximilian 23. Inteligencia artificial educativa creada en el aula",
+    "href": "https://youtu.be/R80q0sSQB_o",
+    "action": "Ver en YouTube"
+  },
+  {
+    "title": "Aula del Futuro",
+    "text": "Sistema de reservas del Aula del Futuro: el profesorado reserva franjas horarias por nombre y curso o área, con contraseña propia. Las reservas se guardan en la nube y se ven igual desde cualquier ordenador del centro, con huecos fijos de todo el curso para Religión y Bilingüe reservados automáticamente cada semana.",
+    "href": "https://maximilian23.com/aula/",
+    "action": "Abrir Aula del Futuro"
+  },
+  {
+    "title": "¿Se juega?",
+    "text": "Árbitro meteorológico que consulta la previsión real de Zafra a la hora del recreo y decide si se juega o no según un criterio preventivo pensado para el deporte escolar. El profesorado puede forzar la decisión del día con contraseña; ese cambio se ve igual en cualquier ordenador y se reinicia solo a las 12:00.",
+    "href": "https://maximilian23.com/juez/",
+    "action": "Abrir árbitro meteorológico"
+  },
+  {
+    "title": "Laboratorio Musical",
+    "text": "Espacio interactivo para trabajar lectura musical, ritmo, escucha y creatividad desde el aula.",
+    "href": "https://maximilian23.com/lab23/",
+    "action": "Explorar laboratorio"
+  },
+  {
+    "title": "Radio Maximilian 23",
+    "text": "Reproductor para escuchar las audiciones musicales trabajadas en clase, con controles de reproducción para repasarlas y reconocerlas fuera del aula.",
+    "href": "https://maximilian23.com/radio/",
+    "action": "Escuchar audiciones"
+  },
+  {
+    "title": "Plástica",
+    "text": "Área creativa para propuestas visuales, actividades artísticas y recursos vinculados al proyecto.",
+    "href": "https://maximilian23.com/arte/",
+    "action": "Abrir Plástica"
+  },
+  {
+    "title": "Herramientas",
+    "text": "Sección con herramientas útiles para el aula: un radar para controlar el ruido en clase y distintas pizarras para proyectar o trabajar directamente, con fondo negro, blanco, cuadrícula o pentagrama.",
+    "href": "https://maximilian23.com/radar/",
+    "action": "Abrir herramientas"
+  },
+  {
+    "title": "Meteoescuela",
+    "text": "Espacio meteorológico educativo para acercar la observación del tiempo al trabajo de aula.",
+    "href": "https://maximilian23.com/meteored",
+    "action": "Abrir Meteoescuela"
+  },
+  {
+    "title": "Medios",
+    "text": "Entrevista realizada en Canal Extremadura a raíz de Maximilian 23 y su uso como proyecto educativo.",
+    "videoId": "-fdEfXGIb9A",
+    "videoTitle": "Entrevista sobre Maximilian 23 en Canal Extremadura",
+    "href": "https://www.youtube.com/watch?v=-fdEfXGIb9A",
+    "action": "Ver en YouTube"
+  }
+]
