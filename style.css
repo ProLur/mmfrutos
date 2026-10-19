@@ -1239,3 +1239,23 @@ audio[hidden] {
     display:none
   }
 }
+
+/* Preserve the project's own identity without cropping its mascot. */
+.feature-aula img.maximilian-mark {
+  height: 220px;
+  object-fit: contain;
+  padding: 10px 24px;
+}
+.maximilian-identity {
+  width: 100%;
+  padding: 36px 24px 24px;
+  background: #e4e4d5;
+}
+.maximilian-identity img {
+  width: min(100%, 330px);
+  margin-inline: auto;
+}
+.maximilian-identity figcaption {
+  text-align: center;
+  margin-top: 24px;
+}
