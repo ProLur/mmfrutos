@@ -48,6 +48,7 @@ function environment(ids,fetch) {
   await send('Hola');
   assert.equal(agent.nodes.chat.children.at(-1).children[1].textContent,reply);
   assert.equal(agent.nodes.chatForm.button.disabled,false);
+  assert.equal(agent.nodes.chatStatus.className,'');
   await send('Me llamo Manuel');
   assert.equal(JSON.parse(agent.context.localStorage.data.xalzaroth_memory).nombre,'Manuel');
   assert.ok(JSON.parse(agent.context.localStorage.data.xalzaroth_chat).length>0);
@@ -56,7 +57,10 @@ function environment(ids,fetch) {
   assert.equal(agent.nodes.chatForm.button.disabled,false);
   fail=false; resolver=true;
   const pending=send('Petición cancelada'); await flush();
+  assert.equal(agent.nodes.chatStatus.className,'xal-waiting');
+  assert.equal(agent.nodes.chatStatus.children[1].children.length,3);
   agent.nodes.clearChat.events.click();
+  assert.equal(agent.nodes.chatStatus.className,'');
   resolver({ok:true,json:async()=>({reply:'respuesta tardía'})}); await pending;
   assert.equal(agent.nodes.chat.children.length,0);
   assert.match(agent.nodes.chatStatus.textContent,/borradas/);

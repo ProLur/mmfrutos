@@ -1262,29 +1262,50 @@ audio[hidden] {
   margin-top: 24px;
 }
 
-/* The original invocation opens a terminal-like conversation over the portfolio. */
+/* Invocation panel: dark, quiet and distinct from the surrounding portfolio. */
 .xal-dialog {
-  width:min(800px,92vw); height:85dvh; max-height:900px; max-width:92vw;
-  padding:0; border:2px solid #00ffcc; border-radius:8px;
-  background:#010a0a; color:#00ffcc; box-shadow:0 0 28px #00ffcc40;
-  font-family:'Courier New',monospace;
+  width:min(760px,94vw); height:min(800px,86dvh); max-width:94vw; max-height:90dvh;
+  padding:0; border:1px solid #3a514b; border-radius:18px;
+  background:#101d1b; color:#e3eae5; box-shadow:0 32px 100px #0008;
+  font-family:var(--sans); line-height:1.65;
 }
 .xal-dialog[open] { display:flex; flex-direction:column; }
-.xal-dialog::backdrop { background:rgba(0,0,0,.9); }
-.xal-header { display:flex; justify-content:space-between; align-items:center; padding:12px 18px; background:#07100c; border-bottom:1px solid #00ffcc; }
-.xal-header h2 { font:700 19px 'Courier New',monospace; letter-spacing:0; }
-.xal-header button { color:#00ffcc; background:transparent; border:0; font-size:30px; min-width:44px; min-height:44px; }
-.xal-dialog .chat-log { display:block; flex:1; min-height:0; max-height:none; padding:16px; margin:0; border:0; }
-.xal-dialog .chat-message { padding:8px 0; }
-.xal-dialog .chat-message.user { background:transparent; color:#7cfc00; }
-.xal-dialog .chat-message strong { font-size:12px; }
-.xal-dialog form { padding:12px 16px; border-top:1px solid #00ffcc; }
-.xal-label { font-size:12px; }
-.xal-dialog .chat-input { flex-wrap:nowrap; }
-.xal-dialog .chat-input input { color:#7cfc00; background:#000; border-color:#00ffcc; width:auto; flex:1; font-size:16px; }
-.xal-dialog .button { background:#00ffcc; color:#000; padding:10px 18px; }
+.xal-dialog::backdrop { background:rgba(12,19,16,.76); backdrop-filter:blur(6px); }
+.xal-header { display:flex; justify-content:space-between; align-items:center; padding:20px 28px; background:#142420; border-bottom:1px solid #2b4039; }
+.xal-overline { display:block; color:#98b3a5; font-size:10px; letter-spacing:.18em; text-transform:uppercase; margin-bottom:5px; }
+.xal-header h2 { font:400 28px var(--serif); letter-spacing:-.03em; color:#e4e9dc; }
+.xal-header button { color:#acbeb3; background:transparent; border:1px solid #3a514b; border-radius:50%; font-size:24px; width:38px; height:38px; line-height:1; }
+.xal-header button:hover { background:#263c32; color:white; }
+.xal-dialog .chat-log { display:block; flex:1; min-height:0; max-height:none; padding:24px 28px; margin:0; border:0; scrollbar-color:#40574d transparent; }
+.xal-dialog .chat-message { padding:14px 0; font-size:15px; max-width:92%; }
+.xal-dialog .chat-message.user { background:#243b32; color:#e8eee6; border:1px solid #344d40; border-radius:14px 14px 3px 14px; padding:12px 18px; margin:12px 0 12px auto; width:fit-content; }
+.xal-dialog .chat-message strong { color:#97b6a5; font:600 10px var(--sans); letter-spacing:.13em; margin-bottom:6px; }
+.xal-dialog .chat-message.system { padding:3px 0; color:#9bb5a7; font:12px/1.8 Consolas,monospace; }
+.xal-dialog .chat-message.system strong { display:none; }
+.xal-dialog .chat-message.system + .chat-message:not(.system) { margin-top:20px; }
+.xal-dialog form { padding:16px 28px 10px; border-top:1px solid #2b4039; }
+.xal-label { color:#9bb5a7; font-size:11px; }
+.xal-dialog .chat-input { flex-wrap:nowrap; align-items:stretch; }
+.xal-dialog .chat-input input { color:#e3eae5; background:#0c1714; border:1px solid #40574d; border-radius:9px; width:auto; flex:1; font-size:16px; padding:12px 14px; }
+.xal-dialog .chat-input input::placeholder { color:#8ca196; }
+.xal-dialog .button { background:#bdd0b3; color:#16251c; border-radius:9px; padding:10px 20px; font-size:13px; }
+.xal-dialog .button:hover { background:#d3dfcb; }
 .xal-dialog .button:disabled { opacity:.5; cursor:wait; }
-.xal-dialog #chatStatus { color:#00ffcc; padding:0 16px; margin:0; font-size:12px; }
-.xal-dialog .text-button { color:#9ae6d9; align-self:flex-start; padding:10px 16px; font-size:12px; }
-.xal-dialog :focus-visible { outline-color:#7cfc00; }
+.xal-dialog #chatStatus { color:#acbeb3; padding:0 28px; margin:0; font-size:12px; min-height:22px; }
+.xal-dialog .text-button { color:#9bb5a7; align-self:flex-start; padding:8px 28px 18px; font-size:11px; text-decoration-color:#526b5d; }
+.xal-dialog :focus-visible { outline:2px solid #bdd0b3; outline-offset:3px; }
+.xal-dots { display:inline-flex; gap:4px; margin-left:10px; vertical-align:middle; }
+.xal-dots i { display:block; width:4px; height:4px; border-radius:50%; background:#bdd0b3; animation:xal-pulse 1.2s ease-in-out infinite; }
+.xal-dots i:nth-child(2) { animation-delay:.18s; }
+.xal-dots i:nth-child(3) { animation-delay:.36s; }
+@keyframes xal-pulse { 0%,70%,100% { opacity:.3; transform:translateY(0); } 35% { opacity:1; transform:translateY(-3px); } }
 html:has(.xal-dialog[open]) { overflow:hidden; }
+@media(max-width:600px) {
+  .xal-dialog { height:90dvh; border-radius:12px; }
+  .xal-header { padding:16px 18px; }
+  .xal-dialog .chat-log { padding:18px; }
+  .xal-dialog form { padding:14px 18px 8px; }
+  .xal-dialog #chatStatus { padding-inline:18px; }
+  .xal-dialog .text-button { padding:8px 18px 14px; }
+}
+@media(prefers-reduced-motion:reduce) { .xal-dots i { animation:none; opacity:.75; } }
