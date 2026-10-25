@@ -1294,8 +1294,9 @@ audio[hidden] {
 .xal-dialog #chatStatus { color:#acbeb3; padding:0 28px; margin:0; font-size:12px; min-height:22px; }
 .xal-dialog .text-button { color:#9bb5a7; align-self:flex-start; padding:8px 28px 18px; font-size:11px; text-decoration-color:#526b5d; }
 .xal-dialog :focus-visible { outline:2px solid #bdd0b3; outline-offset:3px; }
-.xal-dots { display:inline-flex; gap:4px; margin-left:10px; vertical-align:middle; }
-.xal-dots i { display:block; width:4px; height:4px; border-radius:50%; background:#bdd0b3; animation:xal-pulse 1.2s ease-in-out infinite; }
+.xal-waiting { width:fit-content; padding:15px 18px; margin:14px 0; background:#1b3028; border-radius:14px 14px 14px 3px; }
+.xal-dots { display:flex; gap:5px; align-items:center; height:10px; }
+.xal-dots i { display:block; width:6px; height:6px; border-radius:50%; background:#bdd0b3; animation:xal-pulse 1.2s ease-in-out infinite; }
 .xal-dots i:nth-child(2) { animation-delay:.18s; }
 .xal-dots i:nth-child(3) { animation-delay:.36s; }
 @keyframes xal-pulse { 0%,70%,100% { opacity:.3; transform:translateY(0); } 35% { opacity:1; transform:translateY(-3px); } }

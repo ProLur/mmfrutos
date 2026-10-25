@@ -10,7 +10,8 @@ class Element {
   set innerHTML(value) { throw new Error('Untrusted HTML must never be interpreted'); }
   setAttribute(name,value) { this.attributes[name]=value; }
   addEventListener(event,callback) { this.events[event]=callback; }
-  append(...items) { this.children.push(...items); }
+  append(...items) { items.forEach(item=>item.parent=this); this.children.push(...items); }
+  remove() { if(this.parent) this.parent.children=this.parent.children.filter(item=>item!==this); }
   replaceChildren(...items) { this.children=items; }
   showModal() { this.open=true; }
   close() { this.open=false; }
@@ -48,7 +49,7 @@ function environment(ids,fetch) {
   await send('Hola');
   assert.equal(agent.nodes.chat.children.at(-1).children[1].textContent,reply);
   assert.equal(agent.nodes.chatForm.button.disabled,false);
-  assert.equal(agent.nodes.chatStatus.className,'');
+  assert.equal(agent.nodes.chat.children.some(item=>item.className==='xal-waiting'),false);
   await send('Me llamo Manuel');
   assert.equal(JSON.parse(agent.context.localStorage.data.xalzaroth_memory).nombre,'Manuel');
   assert.ok(JSON.parse(agent.context.localStorage.data.xalzaroth_chat).length>0);
@@ -57,10 +58,10 @@ function environment(ids,fetch) {
   assert.equal(agent.nodes.chatForm.button.disabled,false);
   fail=false; resolver=true;
   const pending=send('Petición cancelada'); await flush();
-  assert.equal(agent.nodes.chatStatus.className,'xal-waiting');
-  assert.equal(agent.nodes.chatStatus.children[1].children.length,3);
+  assert.equal(agent.nodes.chat.children.at(-1).className,'xal-waiting');
+  assert.equal(agent.nodes.chat.children.at(-1).children[0].children.length,3);
   agent.nodes.clearChat.events.click();
-  assert.equal(agent.nodes.chatStatus.className,'');
+  assert.equal(agent.nodes.chat.children.some(item=>item.className==='xal-waiting'),false);
   resolver({ok:true,json:async()=>({reply:'respuesta tardía'})}); await pending;
   assert.equal(agent.nodes.chat.children.length,0);
   assert.match(agent.nodes.chatStatus.textContent,/borradas/);

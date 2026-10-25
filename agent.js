@@ -14,13 +14,16 @@ function save() {
   } catch { status.textContent = 'El navegador no permite guardar la conversación. Puedes seguir conversando durante esta visita.'; }
 }
 function setBusy(value) { busy = value; submit.disabled = value; input.disabled = value; }
+let waitingMessage = null;
 function waiting(active) {
-  status.replaceChildren();
-  status.className = active ? 'xal-waiting' : '';
+  waitingMessage?.remove(); waitingMessage = null;
+  status.textContent = '';
   if (!active) return;
+  waitingMessage = document.createElement('div'); waitingMessage.className = 'xal-waiting';
+  waitingMessage.setAttribute('role','status'); waitingMessage.setAttribute('aria-label','Xal’Zaroth está preparando una respuesta');
   const dots = document.createElement('span'); dots.className = 'xal-dots'; dots.setAttribute('aria-hidden','true');
   for (let i=0;i<3;i++) dots.append(document.createElement('i'));
-  status.append(document.createTextNode('Xal’Zaroth está pensando'),dots);
+  waitingMessage.append(dots); log.append(waitingMessage); log.scrollTop = log.scrollHeight;
 }
 function appendMessage(role,text) {
   const message = document.createElement('div'); message.className = `chat-message ${role}`;
