@@ -2,38 +2,84 @@
 const form = document.getElementById('chatForm'), input = document.getElementById('message');
 const log = document.getElementById('chat'), status = document.getElementById('chatStatus');
 const submit = form.querySelector('button'), clear = document.getElementById('clearChat');
-let history = [], request = null;
+const dialog = document.getElementById('agentDialog'), open = document.getElementById('openChat');
+let history = [], memory = {}, request = null, generation = 0, busy = false;
+function read(key, fallback) {
+  try { return JSON.parse(localStorage.getItem(key)) || fallback; } catch { return fallback; }
+}
+function save() {
+  try {
+    localStorage.setItem('xalzaroth_chat',JSON.stringify(history));
+    localStorage.setItem('xalzaroth_memory',JSON.stringify(memory));
+  } catch { status.textContent = 'El navegador no permite guardar la conversación. Puedes seguir conversando durante esta visita.'; }
+}
+function setBusy(value) { busy = value; submit.disabled = value; input.disabled = value; }
 function appendMessage(role,text) {
   const message = document.createElement('div'); message.className = `chat-message ${role}`;
   const author = document.createElement('strong'); author.textContent = role === 'user' ? 'Tú' : 'Xal’Zaroth';
-  message.append(author,document.createTextNode(text)); log.append(message); log.scrollTop = log.scrollHeight;
+  const content = document.createElement('span'); content.textContent = text;
+  message.append(author,content); log.append(message); log.scrollTop = log.scrollHeight;
+  return content;
 }
+async function typeMessage(text, token) {
+  const content = appendMessage('bot','');
+  const reduced = typeof matchMedia === 'function' && matchMedia('(prefers-reduced-motion: reduce)').matches;
+  for (let i=0; i<text.length; i+=reduced ? text.length : 2) {
+    if (token !== generation) return false;
+    content.textContent = text.slice(0,reduced ? text.length : i+2);
+    log.scrollTop = log.scrollHeight;
+    if (!reduced) await new Promise(resolve => setTimeout(resolve,25));
+  }
+  if (token !== generation) return false;
+  history.push({role:'bot',text}); save(); return true;
+}
+open.addEventListener('click', async () => {
+  dialog.showModal();
+  if (busy || history.length) { if (!busy) input.focus(); return; }
+  const saved = read('xalzaroth_chat',[]), storedMemory = read('xalzaroth_memory',{});
+  memory = storedMemory && typeof storedMemory === 'object' && !Array.isArray(storedMemory) ? storedMemory : {};
+  history = Array.isArray(saved) ? saved.filter(m => m && ['user','bot'].includes(m.role) && typeof m.text === 'string') : [];
+  history.forEach(m => appendMessage(m.role,m.text));
+  const token = generation;
+  setBusy(true); status.textContent = 'Estableciendo contacto…';
+  const lines = history.length ? ['Reconectando con Xal’Zaroth…',memory.nombre ? `He vuelto a encontrarte, ${memory.nombre}. Continúa.` : 'Conexión restablecida. Continúa, humano.'] : ['INICIALIZANDO SISTEMA XAL-ZAROTH v1.0','Cargando protocolos de comunicación','Analizando debilidades humanas','Estableciendo enlace',memory.nombre ? `Xal’Zaroth listo. Te recuerdo, ${memory.nombre}. Habla, humano.` : 'Xal’Zaroth listo. Habla, insignificante humano.'];
+  for (const line of lines) { if (!await typeMessage(line,token)) return; }
+  if (token === generation) { setBusy(false); status.textContent = ''; if (dialog.open) input.focus(); }
+});
+document.getElementById('closeChat').addEventListener('click', () => dialog.close());
+dialog.addEventListener('click', event => { if (event.target === dialog) { const r=dialog.getBoundingClientRect(); if(event.clientX<r.left || event.clientX>r.right || event.clientY<r.top || event.clientY>r.bottom) dialog.close(); } });
+dialog.addEventListener('close', () => open.focus());
 form.addEventListener('submit', async event => {
   event.preventDefault();
   const text = input.value.trim();
-  if (!text || request) return;
-  const controller = new AbortController(); request = controller;
-  const timeout = setTimeout(() => controller.abort(),60000);
-  appendMessage('user',text); input.value = ''; submit.disabled = true;
-  status.textContent = 'Esperando a Xal’Zaroth…';
+  if (!text || busy) return;
+  const token = generation, controller = new AbortController(); request = controller;
+  const timeout = setTimeout(() => controller.abort(),90000);
+  appendMessage('user',text); history.push({role:'user',text}); input.value = ''; setBusy(true);
+  const name = text.match(/(?:me llamo|soy)\s+([a-záéíóúñ]+)/i);
+  if (name) memory.nombre = name[1].charAt(0).toUpperCase()+name[1].slice(1).toLowerCase();
+  save(); status.textContent = 'Xal’Zaroth está pensando…';
   try {
     const response = await fetch('https://xalzaroth.onrender.com/chat', {
       method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({message:text,memory:history.slice(-8).map(item => `${item.role}: ${item.text}`).join('\n')}), signal:controller.signal
+      body:JSON.stringify({message:text,memory:Object.entries(memory).filter(([,v])=>typeof v==='string').map(([k,v])=>`${k}: ${v}`).join(', ')}),signal:controller.signal
     });
     if (!response.ok) throw new Error('service');
     const data = await response.json(), reply = data.reply || data.respuesta || data.message;
     if (typeof reply !== 'string' || !reply.trim()) throw new Error('format');
-    if (request !== controller) return;
-    history.push({role:'user',text},{role:'bot',text:reply}); appendMessage('bot',reply); status.textContent = '';
+    if (token !== generation) return;
+    clearTimeout(timeout); status.textContent = '';
+    await typeMessage(reply.replace(/^"(.*)"$/s,'$1'),token);
   } catch {
-    if (request === controller) status.textContent = 'El servicio no ha respondido. Puedes intentarlo de nuevo en unos instantes.';
+    if (token === generation) status.textContent = 'El servicio no ha respondido. Puedes intentarlo de nuevo en unos instantes.';
   } finally {
     clearTimeout(timeout);
-    if (request === controller) { request = null; submit.disabled = false; input.focus(); }
+    if (token === generation) { request = null; setBusy(false); if (dialog.open) input.focus(); }
   }
 });
 clear.addEventListener('click', () => {
-  const active = request; request = null; active?.abort(); history = []; log.replaceChildren();
-  status.textContent = 'Conversación borrada de esta página.'; submit.disabled = false; input.focus();
+  if (!confirm('¿Borrar toda la memoria y conversación con Xal’Zaroth de este navegador?')) return;
+  generation++; request?.abort(); request = null; history = []; memory = {}; log.replaceChildren();
+  try { localStorage.removeItem('xalzaroth_chat'); localStorage.removeItem('xalzaroth_memory'); } catch {}
+  status.textContent = 'Memoria y conversación borradas.'; setBusy(false); input.focus();
 });
